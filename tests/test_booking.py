@@ -32,8 +32,8 @@ def test_create_request(db_connection):
     repository.create_request(Booking(6, str_to_date('2025/06/06'), str_to_date('2025/06/09'), 5, 4, False))
 
     assert repository.view_requests(5) == [
-        Booking(5, str_to_date('2025/08/02'), str_to_date('2025/08/06'), 5, 1, False),
-        Booking(6, str_to_date('2025/06/06'), str_to_date('2025/06/09'), 5, 4, False)
+        Booking(9, str_to_date('2025/06/06'), str_to_date('2025/06/09'), 5, 4, False),
+        Booking(5, str_to_date('2025/08/02'), str_to_date('2025/08/06'), 5, 1, False)
     ]
 
 # Test reject a request by deleting the column
@@ -52,6 +52,11 @@ def test_approve_request(db_connection):
 
     repository.approve_request(5)
 
-    assert repository.view_bookings(5) == [Booking(5, str_to_date('2025/08/02'), str_to_date('2025/08/06'), 5, 1, True)]
+    assert repository.view_bookings(5) == [
+        Booking(7, str_to_date('2025/06/17'), str_to_date('2025/06/22'), 5, 2, True),
+        Booking(8, str_to_date('2025/07/02'), str_to_date('2025/07/06'), 5, 5, True),
+        Booking(5, str_to_date('2025/08/02'), str_to_date('2025/08/06'), 5, 1, True),
+        Booking(6, str_to_date('2025/08/04'), str_to_date('2025/08/11'), 5, 2, True)
+        ]
 
 

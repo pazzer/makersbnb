@@ -6,7 +6,7 @@ class BookingRepository:
 
     # See all confirmed bookings for a space
     def view_bookings(self, space_id):
-        rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = TRUE', [space_id])
+        rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = TRUE ORDER BY start_range', [space_id])
         spaces = []
         for row in rows:
             item = Booking(row['booking_id'], row['start_range'], row['end_range'], row['space_id'], row['user_id'], row['is_confirmed'])
@@ -15,7 +15,7 @@ class BookingRepository:
 
     # See all requests (unconfirmed bookings) for a space
     def view_requests(self, space_id):
-        rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = FALSE', [space_id])
+        rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = FALSE ORDER BY start_range', [space_id])
         spaces = []
         for row in rows:
             item = Booking(row['booking_id'], row['start_range'], row['end_range'], row['space_id'], row['user_id'], row['is_confirmed'])

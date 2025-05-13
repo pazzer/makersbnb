@@ -1,6 +1,9 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, redirect, render_template
 from lib.database_connection import get_flask_database_connection
+
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -14,6 +17,46 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+# ---------------------------------------------- bookings routes ------------------------------------------------------------
+# GET /myspaces/bookings/<space_id>
+# Returns confirmed bookings for a space
+@app.route('/myspaces/bookings/<int:space_id>', methods=['GET'])
+def get_bookings(space_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    bookings = repository.view_bookings(space_id)
+    return render_template('myspaces_bookings.html', bookings=bookings)
+
+# GET /myspaces/requests/<space_id>
+# Returns requests to book for a space
+@app.route('/myspaces/requests/<int:space_id>', methods=['GET'])
+def get_requests(space_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    requests = repository.view_requests(space_id)
+    return render_template('myspaces_requests.html', requests=requests)
+
+#  POST (DELETE) myspaces/requests/<space_id>/<booking_id>/reject
+# Deletes a request when it is rejected
+@app.route('/myspaces/requests/<int:space_id>/<int:booking_id>/reject', methods=['POST'])
+def delete_request(booking_id, space_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    repository.reject_request(booking_id)
+    return redirect(f'/myspaces/requests/{space_id}')
+
+# POST (PUT) myspaces/requests/<space_id>/<booking_id>/accept
+# Accepts a booking request and changes is_confirmed to true
+@app.route('/myspaces/requests/<int:space_id>/<int:booking_id>/accept', methods=['POST'])
+def accept_request(booking_id, space_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    repository.approve_request(booking_id)
+    return redirect(f'/myspaces/requests/{space_id}')
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
