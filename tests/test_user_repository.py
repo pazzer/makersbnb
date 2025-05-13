@@ -1,8 +1,43 @@
 # __created_by__ == Paul Patterson
 import pytest
 
-from lib.custom_exceptions import MalformedPasswordError, EmailAlreadyExistsError, MalformedEmailError
+from lib.custom_exceptions import MalformedPasswordError, EmailAlreadyExistsError, MalformedEmailError, UnrecognisedIdError
 from lib.user_repository import UserRepository
+
+#### find_by_id
+
+def test_find_by_id_throws_error_if_id_not_in_database(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    user_repository = UserRepository(db_connection)
+    with pytest.raises(UnrecognisedIdError) as e:
+        user_repository.find_by_id(99)
+    error_message = str(e.value) 
+    assert error_message == "id '99' not recognized."
+
+def test_valid_find_by_id_returns_user_object(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    user_repository = UserRepository(db_connection)
+    user = user_repository.find_by_id(3)
+    assert user.email == 'carol@example.com'
+    assert user.user_id == 3
+    assert user.password == '24326224313224634b45356d65626b6a555971725762454d7056494a2e5457577231497a73344e6876617665303948324c5338685264323961656671'
+
+
+#### find by email
+
+def test_find_by_valid_email_returns_user_object(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    user_repository = UserRepository(db_connection)
+    user = user_repository.find_by_email('carol@example.com')
+    assert user.email == 'carol@example.com'
+    assert user.user_id == 3
+    assert user.password == '24326224313224634b45356d65626b6a555971725762454d7056494a2e5457577231497a73344e6876617665303948324c5338685264323961656671'
+
+def test_find_by_email_returns_none_if_not_found(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    user_repository = UserRepository(db_connection)
+    assert user_repository.find_by_email('carl@example.com') is None
+
 
 #### Registering an email
 
@@ -92,7 +127,7 @@ def test_can_register_valid_password(db_connection):
     user_repository = UserRepository(db_connection)
     assert user_repository.register_new_user('gottfried@go_mail.com', '12345678!') is None
 
-#### Password checking
+#### Checking login credentials
 
 def test_check_password_rejects_wrong_password(db_connection):
     db_connection.seed("seeds/makersbnb.sql")

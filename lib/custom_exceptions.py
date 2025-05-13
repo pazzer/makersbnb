@@ -20,3 +20,8 @@ class MalformedPasswordError(MakersBnbException):
     def __init__(self, message, *args):
         self.message = message
         super(MalformedPasswordError, self).__init__(message, *args)
+
+class UnrecognisedIdError(MakersBnbException):
+    def __init__(self, message, *args):
+        self.message = message
+        super(UnrecognisedIdError, self).__init__(message, *args)

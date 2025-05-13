@@ -3,7 +3,7 @@ from operator import truediv
 
 from lib.user import User
 import bcrypt
-from .custom_exceptions import EmailAlreadyExistsError, MalformedPasswordError, MalformedEmailError
+from .custom_exceptions import EmailAlreadyExistsError, MalformedPasswordError, MalformedEmailError, UnrecognisedIdError
 
 
 class UserRepository:
@@ -28,9 +28,11 @@ class UserRepository:
     def find_by_id(self, id_):
         """Returns the `User` associated with `id_`. If no match is found an AssertionError
         is thrown."""
-        rows = self._connection.execute("SELECT * FROM users WHERE id = %s", [id_])
-        assert len(rows) == 1, f"id '{id_}' not recognized."
-        return User(rows[0]['id'], rows[0]['email'], rows[0]['password'])
+        rows = self._connection.execute("SELECT * FROM users WHERE user_id = %s", [id_])
+        if len(rows) != 1:
+            raise UnrecognisedIdError(f"id '{id_}' not recognized.")
+        else:
+            return User(rows[0]['user_id'], rows[0]['email_address'], rows[0]['password'])
 
 
     def find_by_email(self, email):
