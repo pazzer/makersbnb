@@ -7,5 +7,5 @@ class User:
         assert isinstance(password, str), "bad type for 'password' - require 'str'"
 
         self.user_id = user_id
-        self.email = email_address
+        self.email_address = email_address
         self.password = password

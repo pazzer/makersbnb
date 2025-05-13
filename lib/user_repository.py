@@ -62,12 +62,14 @@ class UserRepository:
             hashed_password = UserRepository._prepare_password_for_storage(password)
             self._connection.execute("INSERT INTO users (email_address, password) VALUES (%s, %s)", [email, hashed_password])
 
+
     @staticmethod
     def _prepare_password_for_storage(password):
         """Passwords are converted to bytes, hashed, then stored as hex-strings in the database."""
         utf8_password = password.encode('utf-8')
         hashed = bcrypt.hashpw(utf8_password, bcrypt.gensalt())
         return hashed.hex()
+
 
     @staticmethod
     def _run_email_checks(email):
@@ -93,8 +95,11 @@ class UserRepository:
 
     @staticmethod
     def _run_password_checks(password):
-        """User passwords must (i) be  between 8 and 20 characters long, and (ii) contain at least one
-        of ! @ £ $ % ^ & '"""
+        """User passwords must:
+        - be between 8 and 20 characters long
+        - contain at least one of ! @ £ $ % ^ & '
+        - contain no whitespace
+        """
         if " " in password:
             raise MalformedPasswordError('password cannot contain whitespace')
         elif len(password) < 8:

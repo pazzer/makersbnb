@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="t-title">User Login</title>
+</head>
+<body>
+<h1>🔑 Log in to makersbnb</h1>
+<form action="/login" method="post">
+    <!-- We check to see if there are any errors from a previous submission -->
+    {% if errors %}
+    <!-- If so, we show them. -->
+    <p class="t-errors" style="color:red;">
+        Error: {{ errors }}
+    </p>
+    {% endif %}
+    <p style="font-size:14px">If you don't have an account yet, please <a href="/">register</a></p>
+    <p>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email">
+    </p>
+    <p>
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password">
+    </p>
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>
+</body>
+</html>

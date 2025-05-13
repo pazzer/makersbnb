@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h1>🌴 Welcome to makersbnb</h1>
+<p>To register, enter a username and password. Existing users please <a href="/makersbnb.com/login">login</a>.</p>
+<form action="/makersbnb.com" method="post">
+    <!-- We check to see if there are any errors from a previous submission -->
+    {% if errors %}
+    <!-- If so, we show them. -->
+    <p class="t-errors" style="color:red;">
+        ⚠️ {{ errors }}
+    </p>
+    {% endif %}
+    <p>
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ values_so_far.email }}" id="email">
+    </p>
+    <p>
+        <label for="password_1">Password</label>
+        <input type="text" name="password_1" value="{{ values_so_far.password_1 }}" id="password_1">
+    </p>
+    <p>
+        <label for="password_2">Confirm password</label>
+        <input type="text" name="password_2" value="{{ values_so_far.password_2 }}" id="password_2">
+    </p>
+    <p>
+        <input type="submit" value="Create my Account">
+    </p>
+</form>
+</body>
+</html>

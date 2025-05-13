@@ -4,6 +4,10 @@ import pytest
 from lib.custom_exceptions import MalformedPasswordError, EmailAlreadyExistsError, MalformedEmailError, UnrecognisedIdError
 from lib.user_repository import UserRepository
 
+
+def test_get_all_users(db_connection):
+    raise NotImplementedError("test placeholder")
+
 #### find_by_id
 
 def test_find_by_id_throws_error_if_id_not_in_database(db_connection):
@@ -18,7 +22,7 @@ def test_valid_find_by_id_returns_user_object(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     user_repository = UserRepository(db_connection)
     user = user_repository.find_by_id(3)
-    assert user.email == 'carol@example.com'
+    assert user.email_address == 'carol@example.com'
     assert user.user_id == 3
     assert user.password == '24326224313224634b45356d65626b6a555971725762454d7056494a2e5457577231497a73344e6876617665303948324c5338685264323961656671'
 
@@ -29,7 +33,7 @@ def test_find_by_valid_email_returns_user_object(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     user_repository = UserRepository(db_connection)
     user = user_repository.find_by_email('carol@example.com')
-    assert user.email == 'carol@example.com'
+    assert user.email_address == 'carol@example.com'
     assert user.user_id == 3
     assert user.password == '24326224313224634b45356d65626b6a555971725762454d7056494a2e5457577231497a73344e6876617665303948324c5338685264323961656671'
 
