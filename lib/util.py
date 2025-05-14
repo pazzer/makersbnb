@@ -5,3 +5,5 @@ def to_date(stringdate):
 
 def date_to_str(date_):
     return date_.strftime('%Y/%m/%d')
+
+

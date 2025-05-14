@@ -112,3 +112,8 @@ class UserRepository:
             raise MalformedPasswordError('password must contain at least one of the following characters: ! @ £ $ % ^ & ')
         else:
             return
+
+    def get_owner_of_space(self, space):
+        rows = self._connection.execute('SELECT * FROM users WHERE user_id = %s', [space.user_id])
+        assert len(rows) == 1, f"{space.name} doesn't appear to have an owner!"
+        return User.from_rowdict(rows[0])

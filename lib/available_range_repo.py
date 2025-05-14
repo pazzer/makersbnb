@@ -5,7 +5,7 @@ class AvailableRangeRepo:
         self.connection = connection
 
     def list(self):
-        rows = self.connection.execute('SELECT * FROM availabileRanges')
+        rows = self.connection.execute('SELECT * FROM available_ranges')
         available_ranges = []
         for row in rows:
             item = AvailableRange(row['availability_id'], row['start_range'],
@@ -14,6 +14,7 @@ class AvailableRangeRepo:
         return available_ranges
 
     def add(self, available_range):
-        self.connection.execute(f"INSERT INTO availabileRanges (start_range, " \
-            "end_range, space_id) VALUES(%s,%s,%s)", [available_range.start_range, 
-                available_range.end_range, available_range.space_id])
+        self.connection.execute(f"INSERT INTO available_ranges (start_range, end_range, space_id) VALUES(%s,%s,%s)",
+                                [available_range.start_range, available_range.end_range, available_range.space_id])
+
+

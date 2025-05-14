@@ -43,8 +43,6 @@ def test_create_request(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = BookingRepository(db_connection)
 
-    modern_studio_requests = repository.view_requests(MODERN_STUDIO)
-
     # Dave makes a request to book Modern Studio owned by Eve
     repository.create_request(Booking(None, to_date('2025/06/06'), to_date('2025/06/09'), MODERN_STUDIO, DAVE, False))
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}MakersBnB{% endblock %}</title>
-        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
 
@@ -13,16 +13,21 @@
             <a href="/myspaces/manage">Manage Spaces</a>
         </header>
 
+
         <main>
             {% block content %}
             <!-- Our page specific content goes here, e.g. view spaces, view booking requests -->
             {% endblock %}
         </main>
 
-        <footer>
-            <p>&copy; 2025 MakersBnB, Inc.</p>
-            <p>Created by Zehad, Paul, Fran and Eve</p>
-        </footer>
+
+        <div id="bnb-footer" style="padding-bottom: 8px; padding-top: 32px;">
+            <p style="font-size: 13px; margin: 6px;">© 2025 MakersBnB, Inc.</p>
+            <p style="font-size: 13px; margin: 6px;">Created by Zehad, Paul, Fran and Eve</p>
+        </div>
 
     </body>
+
 </html>
+
+

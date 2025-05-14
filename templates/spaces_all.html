@@ -4,13 +4,13 @@
 
 {% block content %}
     <h2>Explore our spaces</h2>
-    {% for space in spaces %}
+    {% for space, owner, emoji in spaces_and_owners %}
         <div>
-            <h4>{{space.name}}</h4>
-            <p>{{space.description}}</p>
-            <p>£{{space.price_per_night}} per night</p>
-            <p>Hosted by {{space.user_id}}</p>
-            <button><a href='/spaces/{{space.space_id}}'>More info</button>
+            <h4 style="margin-bottom:-4px">{{emoji}} {{space.name}}</h4>
+            <p style="margin:12px 0 -4px 12px">{{space.description}}</p>
+            <p style="margin:12px 0 -4px 12px">£{{space.price_per_night}} per night</p>
+            <p style="margin:12px 0 -4px 12px">Hosted by {{owner.name}}</p>
+            <button style="margin:12px 0 -4px 12px"><a href='/spaces/{{space.space_id}}'>More info</a></button>
         </div>
     {% endfor %}
 {% endblock %}

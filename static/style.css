@@ -1,3 +1,32 @@
-body {
-    font-size: 18px;
+
+
+#coral {
+ background-color: coral;
 }
+
+#navbar-ul {
+  list-style-type: none;
+  margin: 10px 10px;
+  padding: -12;
+  line-height:180%;
+
+}
+
+#navbar-li {
+  display: inline;
+  float: right;
+  margin-left: 10px;
+}
+
+
+#bnb-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: left;
+}
+
+
+

@@ -1,4 +1,5 @@
 from lib.space import Space
+from lib.available_range import *
 
 class SpaceRepository:
     def __init__(self, _connection):
@@ -12,6 +13,7 @@ class SpaceRepository:
             item = Space(row['space_id'], row['name'], row['description'], row['price_per_night'], row['user_id'])
             spaces.append(item)
         return spaces
+
 
     def add_space(self, space):
         self._connection.execute(
@@ -29,3 +31,4 @@ class SpaceRepository:
         rows = self._connection.execute(
             'SELECT * from spaces WHERE user_id = %s', [user_id])
         return [Space(row["space_id"], row["name"], row["description"], row["price_per_night"], row["user_id"]) for row in rows]
+

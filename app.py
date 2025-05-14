@@ -9,6 +9,7 @@ from lib.custom_exceptions import MakersBnbException
 from lib.user_repository import UserRepository
 from lib.booking_repository import BookingRepository
 from lib.space_repository import SpaceRepository
+from lib.space import Space
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -71,7 +72,9 @@ def registration_succeeded():
 
 @app.route('/login')
 def show_login_form():
-    return render_template('login.html', values_so_far=LoginValues.all_empty())
+    return render_template('login.html',
+                           values_so_far=LoginValues.all_empty(),
+                           in_session='user_id' in session)
 
 @app.route('/login', methods=['POST'])
 def handle_login_request():
@@ -165,9 +168,12 @@ def accept_request(booking_id, space_id):
 def get_all_spaces():
     session['user_id'] = 1
     connection = get_flask_database_connection(app)
-    repository  = SpaceRepository(connection)
-    spaces = repository.list_spaces()
-    return render_template('spaces_all.html', spaces=spaces)
+    space_repository  = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    spaces = space_repository.list_spaces()
+    owners = [user_repository.get_owner_of_space(space) for space in spaces]
+    emojis = [Space.image_for_id(space.space_id) for space in spaces]
+    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners, emojis))
 
 # GET / spaces/<int:space_id>
 # Shows user an individual space when they click a button to view more info or book
@@ -176,7 +182,9 @@ def get_individual_space(space_id):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.find(space_id)
-    return render_template('space_individual.html', space=space)
+    user_repository = UserRepository(connection)
+    user = user_repository.get_owner_of_space(space)
+    return render_template('space_individual.html', space=space, owner=user)
 
 
 # ------------------------------ manage spaces page ---------------------------------------------

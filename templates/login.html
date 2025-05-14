@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title class="t-title">User Login</title>
+    <link rel='stylesheet' href='static/style.css'>
 </head>
 <body>
+{% if in_session %}
+<ul id="navbar-ul">
+    <li id="navbar-li"><a href="#">Log out</a></li>
+</ul>
+{% endif %}
 <h1>🔑 Log in to makersbnb</h1>
 <form action="/login" method="post">
     <!-- We check to see if there are any errors from a previous submission -->

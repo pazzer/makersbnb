@@ -11,8 +11,8 @@ all the available ranges
 def test_album_repo_list(db_connection):
     db_connection.seed('seeds/makersbnb.sql')
     repository = AvailableRangeRepo(db_connection)
-    avalable_ranges = repository.list() #get all available ranges
-    assert avalable_ranges == [
+    available_ranges = repository.list() #get all available ranges
+    assert available_ranges == [
         AvailableRange(1,'2025-06-01', '2025-06-10', 1),
         AvailableRange(2,'2025-06-05', '2025-06-15', 2),
         AvailableRange(3,'2025-07-01', '2025-07-10', 3),
