@@ -24,3 +24,8 @@ class SpaceRepository:
             'SELECT * from spaces WHERE space_id = %s', [space_id])
         row = rows[0]
         return Space(row["space_id"], row["name"], row["description"], row["price_per_night"], row["user_id"])
+    
+    def find_for_user(self, user_id):
+        rows = self._connection.execute(
+            'SELECT * from spaces WHERE user_id = %s', [user_id])
+        return [Space(row["space_id"], row["name"], row["description"], row["price_per_night"], row["user_id"]) for row in rows]
