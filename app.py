@@ -55,8 +55,14 @@ def accept_request(booking_id, space_id):
     repository.approve_request(booking_id)
     return redirect(f'/myspaces/requests/{space_id}')
 
+# -------------------------------------------- Spaces routes ---------------------------------------------------
 
-
+@app.route('/spaces', methods=['GET'])
+def get_all_spaces():
+    connection = get_flask_database_connection
+    repository  = SpaceRepository(connection)
+    repository.<get_all_method_name>()
+    return render_template
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
