@@ -8,6 +8,8 @@ from lib.login_values import LoginValues
 from lib.custom_exceptions import MakersBnbException
 from lib.user_repository import UserRepository
 from lib.booking_repository import BookingRepository
+
+from lib.space import Space
 from lib.space_repository import SpaceRepository
 
 from lib.available_range_repo import AvailableRangeRepo
@@ -182,7 +184,7 @@ def create_space():
     space = Space(None, name, description, price_per_night, user_id)
     repository.add_space(space)
 
-    flash('Your space has been added to MakersBnB!')
+    Flask('Your space has been added to MakersBnB!')
     return redirect(f'/myspaces/new')
 
 
