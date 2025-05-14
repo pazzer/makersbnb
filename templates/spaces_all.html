@@ -4,6 +4,13 @@
 
 {% block content %}
     <h2>Explore our spaces</h2>
+    <form >
+        <label for="start_range">Check in date:</label>
+        <input type="date" name="start_range" id="start_range">
+        <label for="end_range">Check out date:</label>
+        <input type="date" name="end_range" id="end_range">
+        <input type="submit" value="Search">
+    </form>
     {% for space in spaces %}
         <div>
             <h4>{{space.name}}</h4>
@@ -11,6 +18,7 @@
             <p>£{{space.price_per_night}} per night</p>
             <p>Hosted by {{space.user_id}}</p>
             <button><a href='/spaces/{{space.space_id}}'>More info</button>
+            <button><a href='/spaces/{{space.space_id}}/book'>Book</a></button>
         </div>
     {% endfor %}
 {% endblock %}

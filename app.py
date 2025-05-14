@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, render_template, session
+from flask import Flask, request, redirect, render_template, session, flash
 from lib.database_connection import get_flask_database_connection
 
 from lib.booking import Booking
@@ -73,6 +73,31 @@ def accept_request(booking_id, space_id):
 
 # -------------------------------------------- Spaces routes ---------------------------------------------------
 
+# GET / new space form page
+# Displays the form to create a new space
+@app.route('/myspaces/new', methods=['GET'])
+def new_space_form():
+    return render_template('myspaces_new.html')
+
+# POST / myspaces/new
+# CReates new space
+@app.route('/myspaces/new', methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    name = request.form['name']
+    description = request.form['description']
+    price_per_night = request.form['price_per_night']
+    user_id = session.get('user_id', None)
+
+    space = Space(None, name, description, price_per_night, user_id)
+    repository.add_space(space)
+
+    flash('Your space has been added to MakersBnB!')
+    return redirect(f'/myspaces/new')
+
+
 # GET / spaces
 # Shows user all spaces listed on our website as soon as they log in
 @app.route('/spaces', methods=['GET'])
@@ -91,6 +116,27 @@ def get_individual_space(space_id):
     repository = SpaceRepository(connection)
     space = repository.find(space_id)
     return render_template('space_individual.html', space=space)
+
+
+
+# POST / spaces/<int:space_id>/book
+# Creating a booking request
+# @app.route('/spaces/<int:space_id>/book', methods=['POST'])
+# def post_request(space_id):
+    
+#     connection = get_flask_database_connection(app)
+#     repository = BookingRepository(connection)
+
+#     start_range = request.form['start_range']
+#     end_range = request.form['end_range']
+#     user_id = session.get('user_id', None)
+
+#     booking = BookingRepository(None, start_range, end_range, space_id, user_id, False)
+
+#     repository.create_request(booking)
+
+#     return redirect(f'/spaces/<int:space_id>/book/sent')
+
 
 
 
