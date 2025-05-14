@@ -18,13 +18,43 @@ CREATE TABLE users (
 );
 
 -- Add any records that are needed for the tests to run
-INSERT INTO users (email_address, password) VALUES
-('alice@example.com', 'password123'),
-('bob@example.com', 'qwerty456'),
-('carol@example.com', 'securepass789'),
-('dave@example.com', 'letmein321'),
-('eve@example.com', 'admin1234');
 
+-- These passwords have been created like so:
+--    password = '12345678!'
+--    utf8_password = password.encode('utf-8')
+--    hashed = bcrypt.hashpw(utf8_password, bcrypt.gensalt())
+--    hex_hashed_password = hashed.hex()
+-- The value of `hex_hashed_password` is the value stored in the 'password' column.
+INSERT INTO users (email_address, password) VALUES
+-- id: 1
+('alice@example.com',
+'243262243132244c637232783267554c6b4b677a3472754c645857306567476451522f38517346646c52426d7334736a547159656372445037733769'),
+-- password123!
+
+-- id: 2
+('bob@example.com',
+'2432622431322444307a4a4a464b6c79686c7a3062494a5832636f4f753263615077516761435257536e7a786470576c564d58516e464c4d62534843'),
+-- _@qwerty456£
+
+-- id: 3
+('carol@example.com',
+'24326224313224634b45356d65626b6a555971725762454d7056494a2e5457577231497a73344e6876617665303948324c5338685264323961656671'),
+-- securepass789$$^
+
+-- id: 4
+('dave@example.com',
+'243262243132246d345154686d5534536d64732e4a756575464630774f76454b744469756951576234726e6630535a416d4c4c6f766d2f31396a4979'),
+-- &&let&mei&n321
+
+-- id: 5
+('eve@example.com',
+'2432622431322468724b72786a325936667765544173637944546a4a4f4257515356664367654f63516674663979516468376f707135745436787979'),
+-- a@dmi£n1234
+
+-- id: 6
+('developer@example.com',
+'24326224313224736c3978776b566563534e4d69377057625771757865474a70386b3063413579634c666d5763706261514b7a444450504b50656343');
+-- ev@fr£pa!ze^abcd_pw
 ------------------------ spaces ------------------------
 
 -- Delete (drop) all our tables
@@ -70,11 +100,11 @@ CREATE TABLE availabileRanges (
 
 -- Add any records that are needed for the tests to run
 INSERT INTO availabileRanges (start_range, end_range, space_id) VALUES
-('2025-06-01', '2025-06-10', 1),
-('2025-06-05', '2025-06-15', 2),
-('2025-07-01', '2025-07-10', 3),
-('2025-07-15', '2025-07-25', 4),
-('2025-08-01', '2025-08-10', 5);
+('2025-06-01', '2025-06-10', 1), -- 'Crazy Cabin,
+('2025-06-05', '2025-06-15', 2), -- 'Urban Loft'
+('2025-07-01', '2025-07-10', 3), -- 'Beach Bungalow'
+('2025-07-15', '2025-07-25', 4), -- 'Mountain Retreat'
+('2025-08-01', '2025-08-10', 5); -- 'Modern Studio'
 
 ------------------------ bookings ------------------------
 
