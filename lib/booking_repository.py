@@ -13,8 +13,9 @@ class BookingRepository:
             spaces.append(item)
         return spaces
 
-    # See all requests (unconfirmed bookings) for a space
+
     def view_requests(self, space_id):
+        '''See all requests (unconfirmed bookings) for a given space_id'''
         rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = FALSE ORDER BY start_range', [space_id])
         spaces = []
         for row in rows:

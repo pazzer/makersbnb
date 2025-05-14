@@ -1,6 +1,6 @@
 from datetime import datetime
 
-def str_to_date(stringdate):
+def to_date(stringdate):
     return datetime.strptime(stringdate, '%Y/%m/%d').date()
 
 def date_to_str(date_):
