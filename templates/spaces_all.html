@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}MakersBnB Spaces{endblock %}
+
+{% block content %}
+    <h2>Explore our spaces</h2>
+    {% for space in spaces %}
+        <div>
+            <h4>{{space.name}}</h4>
+            <p>{{space.description}}</p>
+            <p>£{{space.price_per_night}} per night</p>
+            <p>Hosted by {{space.user_id}}</p>
+            <button><a href='/spaces/{{space.space_id}}'>More info</button>
+        </div>
+    {% endfor %}
+{% endblock %}

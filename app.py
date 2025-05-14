@@ -57,12 +57,30 @@ def accept_request(booking_id, space_id):
 
 # -------------------------------------------- Spaces routes ---------------------------------------------------
 
-@app.route('/spaces', methods=['GET'])
-def get_all_spaces():
-    connection = get_flask_database_connection
-    repository  = SpaceRepository(connection)
-    repository.<get_all_method_name>()
-    return render_template
+# GET / spaces
+# Shows user all spaces listed on our website as soon as they log in
+# @app.route('/spaces', methods=['GET'])
+# def get_all_spaces():
+#     connection = get_flask_database_connection
+#     repository  = SpaceRepository(connection)
+#     spaces = repository.<get_all_method_name>()
+#     return render_template('spaces_all.html', spaces=spaces)
+
+# GET / spaces/<int:space_id>
+# Shows user an individual space when they click a button to view more info or book
+# @app.route('/spaces/<int:space_id>', methods=['GET'])
+# def get_individual_space(space_id):
+#     connection = get_flask_database_connection(app)
+#     repository = SpaceRepository(connection)
+#     space = repository.<get_single_space>(space_id)
+#     return render_template('space_individual.html', space=space)
+
+
+
+
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
