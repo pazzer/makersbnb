@@ -6,25 +6,32 @@
 </head>
 <body>
 <h1>🔑 Log in to makersbnb</h1>
-<form action="/login" method="post">
+<form action="/makersbnb.com/login" method="post">
     <!-- We check to see if there are any errors from a previous submission -->
+    <p>If you don't have an account yet, please <a href="/">register</a></p>
     {% if errors %}
     <!-- If so, we show them. -->
     <p class="t-errors" style="color:red;">
-        Error: {{ errors }}
+        {{ errors }}
     </p>
     {% endif %}
-    <p style="font-size:14px">If you don't have an account yet, please <a href="/">register</a></p>
     <p>
         <label for="email">Email</label>
-        <input type="text" name="email" id="email">
+        <input type="text" name="email" value="{{ values_so_far.email }}" id="email">
     </p>
     <p>
         <label for="password">Password</label>
-        <input type="text" name="password" id="password">
+        <input type="text" name="password" value="{{ values_so_far.password }}" id="password">
     </p>
     <p>
         <input type="submit" value="Submit">
+    </p>
+
+
+</form>
+<form action="/makersbnb.com/dev_login">
+    <p>
+        <input type="submit" value="🔨 Developer Login">
     </p>
 </form>
 </body>

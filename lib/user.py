@@ -9,3 +9,8 @@ class User:
         self.user_id = user_id
         self.email_address = email_address
         self.password = password
+
+
+    @staticmethod
+    def from_rowdict(rowdict):
+        return User(rowdict['user_id'], rowdict['email_address'], rowdict['password'])

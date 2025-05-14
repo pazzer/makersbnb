@@ -12,7 +12,7 @@ class UserRepository:
         self._connection = connection
 
 
-    def check_password(self, email, plain_text_candidate):
+    def find_by_email_and_password(self, email, plain_text_candidate):
         """Verifies that the password stored alongside `email`  matches
         `plain_text_candidate`."""
         rows = self._connection.execute("SELECT * FROM users WHERE email_address = %s", [email])
@@ -22,7 +22,10 @@ class UserRepository:
             assert len(rows) == 1, f"Error - found two records for '{email}'"
             stored_password = rows[0]['password']
             bytes_ = bytes.fromhex(stored_password)
-            return bcrypt.checkpw(plain_text_candidate.encode('utf-8'), bytes_)
+            if bcrypt.checkpw(plain_text_candidate.encode('utf-8'), bytes_):
+                return User.from_rowdict(rows[0])
+            else:
+                return None
 
 
     def find_by_id(self, id_):
@@ -32,7 +35,7 @@ class UserRepository:
         if len(rows) != 1:
             raise UnrecognisedIdError(f"id '{id_}' not recognized.")
         else:
-            return User(rows[0]['user_id'], rows[0]['email_address'], rows[0]['password'])
+            return User.from_rowdict(rows[0])
 
 
     def find_by_email(self, email):
@@ -44,10 +47,10 @@ class UserRepository:
             return None
         else:
             assert len(rows) == 1, f"Error - found two records for '{email}'"
-            return User(rows[0]['user_id'], rows[0]['email_address'], rows[0]['password'])
+            return User.from_rowdict(rows[0])
 
 
-    def register_new_user(self, email, password):
+    def create_user(self, email, password):
         """Attempts to register a new user with the supplied credentials.
         - If `email` address already exists and EmailAlreadyExistsError is thrown.
         - For the password to be accepted it must be between 8 and 20 characters long AND contain
@@ -83,7 +86,6 @@ class UserRepository:
         if not email.endswith('.com'):
             raise MalformedEmailError('email should end with .com')
         elif len([ch for ch in email if ch == "@"]) != 1:
-            print(len([ch for ch in email if ch == "@"]))
             raise MalformedEmailError('email must have a single "@" in it.')
         elif " " in email:
             raise MalformedEmailError('email must not contain whitespace')
