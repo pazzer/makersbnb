@@ -18,16 +18,16 @@ app.secret_key = os.urandom(24)
 
 @app.route('/')
 def empty_route():
-    return redirect('/makersbnb.com')
+    return redirect('/register')
 
 # Registration
 
-@app.route('/makersbnb.com')
+@app.route('/register')
 def show_registration_form():
     return render_template('register.html', values_so_far=RegistrationValues.all_empty())
 
 
-@app.route('/makersbnb.com', methods=["POST"])
+@app.route('/register', methods=["POST"])
 def handle_registration_request():
     registration_values = RegistrationValues.from_post_request(request)
 
@@ -52,18 +52,18 @@ def handle_registration_request():
             return render_template("registration_complete.html")
 
 
-@app.route('/makersbnb.com/registration_complete')
+@app.route('/registration_complete')
 def registration_succeeded():
     return render_template('registration_complete.html')
 
 
 # Login
 
-@app.route('/makersbnb.com/login')
+@app.route('/login')
 def show_login_form():
     return render_template('login.html', values_so_far=LoginValues.all_empty())
 
-@app.route('/makersbnb.com/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def handle_login_request():
     login_values = LoginValues.from_post_request(request)
 
@@ -84,20 +84,20 @@ def handle_login_request():
                 values_so_far=login_values)
         else:
             session['user_id'] = user.user_id
-            return redirect('/makersbnb.com/spaces')
+            return redirect('/spaces')
 
 
 # ⚠️ ⚠️ ⚠️ ⚠️ This must be removed prior to deployment ⚠️ ⚠️ ⚠️ ⚠️ #
-@app.route('/makersbnb.com/dev_login')
+@app.route('/dev_login')
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
     user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw')
     assert user is not None
     session['user_id'] = user.user_id
-    return redirect('/makersbnb.com/spaces')
+    return redirect('/spaces')
 
-@app.route('/makersbnb.com/logout')
+@app.route('/logout')
 def log_out():
     if 'user_id' in session:
         db_conn = get_flask_database_connection(app)
@@ -105,11 +105,11 @@ def log_out():
         user = user_repository.find_by_id(session['user_id'])
         del session['user_id']
 
-    return redirect('/makersbnb.com/login')
+    return redirect('/login')
 
 # Spaces
 
-@app.route('/makersbnb.com/spaces')
+@app.route('/spaces')
 def show_spaces():
     if 'user_id' in session:
         db_conn = get_flask_database_connection(app)
@@ -123,7 +123,7 @@ def show_spaces():
             '🏥 Modern Studio'
         ])
     else:
-        return redirect('/makersbnb.com/login')
+        return redirect('/login')
 
 
 

@@ -7,7 +7,7 @@ We can render the index page
 """
 def test_get_index(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/makersbnb.com")
+    page.goto(f"http://{test_web_address}/")
 
     # We look at the <p> tag
     h1 = page.locator('h1')
