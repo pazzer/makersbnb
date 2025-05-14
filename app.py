@@ -8,6 +8,8 @@ from lib.booking_repository import BookingRepository
 from lib.space import Space
 from lib.space_repository import SpaceRepository
 
+from lib.available_range_repo import AvailableRangeRepo
+
 # Create a new Flask app
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -117,6 +119,16 @@ def get_individual_space(space_id):
     space = repository.find(space_id)
     return render_template('space_individual.html', space=space)
 
+# GET spaces/filtered
+# Shows the user suitable spaces depending on their date range
+@app.route('/spaces', methods=['GET'])
+def get_filtered_spaces():
+    start_range = request.args.get('start_range')
+    end_range = request.args.get('end_range')
+    connection = get_flask_database_connection(app)
+    repository = AvailableRangeRepo(connection)
+    spaces = repository.list_all_available_spaces(start_range, end_range)
+    return render_template('spaces_filtered.html', spaces=spaces)
 
 
 # POST / spaces/<int:space_id>/book

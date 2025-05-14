@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2>Explore our spaces</h2>
-    <form >
+    <form action="/spaces/filtered" method="GET">
         <label for="start_range">Check in date:</label>
         <input type="date" name="start_range" id="start_range">
         <label for="end_range">Check out date:</label>
