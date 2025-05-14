@@ -16,7 +16,7 @@ app = Flask(__name__)
 #   ; open http://localhost:5001/index
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    return render_template('example_base_extended.html')
 
 # ---------------------------------------------- bookings routes ------------------------------------------------------------
 # GET /myspaces/bookings/<space_id>
