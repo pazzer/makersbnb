@@ -105,11 +105,6 @@ def test_can_log_out(db_connection, page, test_web_address):
     field = get_input_field('password', page)
     expect(field).to_have_value("")
 
-
-
-
-
-
 # # Register
 #
 # def test_can_register_with_valid_email_and_password():
