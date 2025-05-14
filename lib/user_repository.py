@@ -39,8 +39,8 @@ class UserRepository:
 
 
     def find_by_email(self, email):
-        """Returns the `User` associated with the passed-in `email`.
-        - If no match is found None is returned.
+        """Returns the `User` associated with `email`.
+        - If no match is found `None` is returned.
         - If more than one match is found as AssertionError is thrown (v. troubling!)"""
         rows = self._connection.execute("SELECT * FROM users WHERE email_address = %s", [email])
         if len(rows) == 0:

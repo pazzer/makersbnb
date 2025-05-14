@@ -42,7 +42,7 @@ def handle_registration_request():
             values_so_far=registration_values)
     else:
         try:
-            user_repository.register_new_user(registration_values.email, registration_values.password_1)
+            user_repository.create_user(registration_values.email, registration_values.password_1)
         except MakersBnbException as err:
             return render_template(
                 "register.html",
@@ -92,7 +92,7 @@ def handle_login_request():
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
-    user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw ')
+    user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw')
     assert user is not None
     session['user_id'] = user.user_id
     return redirect('/makersbnb.com/spaces')

@@ -100,11 +100,11 @@ CREATE TABLE availabileRanges (
 
 -- Add any records that are needed for the tests to run
 INSERT INTO availabileRanges (start_range, end_range, space_id) VALUES
-('2025-06-01', '2025-06-10', 1),
-('2025-06-05', '2025-06-15', 2),
-('2025-07-01', '2025-07-10', 3),
-('2025-07-15', '2025-07-25', 4),
-('2025-08-01', '2025-08-10', 5);
+('2025-06-01', '2025-06-10', 1), -- 'Crazy Cabin,
+('2025-06-05', '2025-06-15', 2), -- 'Urban Loft'
+('2025-07-01', '2025-07-10', 3), -- 'Beach Bungalow'
+('2025-07-15', '2025-07-25', 4), -- 'Mountain Retreat'
+('2025-08-01', '2025-08-10', 5); -- 'Modern Studio'
 
 ------------------------ bookings ------------------------
 
@@ -129,8 +129,8 @@ CREATE TABLE bookings (
 
 -- Add any records that are needed for the tests to run
 INSERT INTO bookings (start_range, end_range, space_id, user_id, is_confirmed) VALUES
-('2025-06-02', '2025-06-05', 1, 2, FALSE),
-('2025-06-06', '2025-06-09', 2, 3, FALSE),
-('2025-07-02', '2025-07-04', 3, 4, FALSE),
-('2025-07-16', '2025-07-20', 4, 5, FALSE),
-('2025-08-02', '2025-08-06', 5, 1, FALSE);
+('2025-06-02', '2025-06-05', 1, 2, FALSE), -- 'Crazy Cabin,
+('2025-06-06', '2025-06-09', 2, 3, FALSE), -- 'Urban Loft'
+('2025-07-02', '2025-07-04', 3, 4, FALSE), -- 'Beach Bungalow'
+('2025-07-16', '2025-07-20', 4, 5, FALSE), -- 'Mountain Retreat'
+('2025-08-02', '2025-08-06', 5, 1, FALSE); -- 'Modern Studio'
