@@ -4,21 +4,27 @@
 
 {% block content %}
     <h2>Explore our spaces</h2>
-    <form action="/spaces/filtered" method="GET">
-        <label for="start_range">Check in date:</label>
-        <input type="date" name="start_range" id="start_range">
-        <label for="end_range">Check out date:</label>
-        <input type="date" name="end_range" id="end_range">
-        <input type="submit" value="Search">
+    <div id="spaces_search_bar_div">
+        <form action="/spaces/filtered" method="GET" id="spaces_search_bar">
+            <label for="start_range">Check in date:</label>
+            <input type="date" name="start_range" id="start_range">
+            <label for="end_range">Check out date:</label>
+            <input type="date" name="end_range" id="end_range">
+            <input type="submit" value="&#128269;">
     </form>
-    {% for space in spaces %}
-        <div>
-            <h4>{{space.name}}</h4>
-            <p>{{space.description}}</p>
-            <p>£{{space.price_per_night}} per night</p>
-            <p>Hosted by {{space.user_id}}</p>
-            <button><a href='/spaces/{{space.space_id}}'>More info</button>
-            <button><a href='/spaces/{{space.space_id}}/book'>Book</a></button>
-        </div>
-    {% endfor %}
+    </div>
+    <div id="spaces_div">
+        {% for space in spaces %}
+            <div class="space">
+                <h4>{{space.name}}</h4>
+                <p>{{space.description}}</p>
+                <p class="price">£{{space.price_per_night}} per night</p>
+                <!-- <p>Hosted by {{space.user_id}}</p> -->
+                <div class="buttons_div">
+                    <button><a href='/spaces/{{space.space_id}}'>More info</button>
+                    <button><a href='/spaces/{{space.space_id}}/book'>Book</a></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

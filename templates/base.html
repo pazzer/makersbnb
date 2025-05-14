@@ -4,13 +4,19 @@
         <meta charset="UTF-8">
         <title>{% block title %}MakersBnB{% endblock %}</title>
         <link rel="stylesheet" href="/static/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     </head>
     <body>
 
         <header>
             <h1>MakersBnB</h1>
-            <a href="/spaces">View Spaces</a>
-            <a href="/myspaces/manage">Manage Spaces</a>
+            <div id="header_links">
+                <a href="/spaces">View Spaces</a>
+                <p>|</p>
+                <a href="/myspaces/manage">Manage Spaces</a>
+            </div>
         </header>
 
         <main>
