@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Your confirmed bookings</h1>
+        {% if bookings|length < 1%}
+            <p>You have no confirmed bookings for this space</p>
+        {% else %}
+            <p>Your confirmed bookings for {{bookings[0].space_id}}</p>
+            {% for booking in bookings %}
+                <div>
+                    <p>Guest: {{booking.user_id}}</p>
+                    <p>Check in: {{booking.start_range}}</p>
+                    <p>Check out: {{booking.end_range}}</p>
+                    <p>Number of nights: {{(booking.end_range - booking.start_range).days}}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>

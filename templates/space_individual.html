@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}MakersBnB | {{space.name}}{% endblock %}
+
+{% block content %}
+    <h4>{{space.name}}</h4>
+    <p>{{space.description}}</p>
+    <p>£{{space.price_per_night}} per night</p>
+    <p>Hosted by {{space.user_id}}</p>
+    <p>Available date ranges:</p>
+    <ul>
+        <li>First date range</li>
+        <li>Second date range</li>
+        <li>etc</li>
+    </ul>
+    <button><a href='/spaces'>Go back</a></button>
+{% endblock %}

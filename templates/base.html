@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}MakersBnB{% endblock %}</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+        <header>
+            <h1>MakersBnB</h1>
+            <a href="/spaces">View Spaces</a>
+            <a href="/myspaces/manage">Manage Spaces</a>
+        </header>
+
+        <main>
+            {% block content %}
+            <!-- Our page specific content goes here, e.g. view spaces, view booking requests -->
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2025 MakersBnB, Inc.</p>
+            <p>Created by Zehad, Paul, Fran and Eve</p>
+        </footer>
+
+    </body>
+</html>
