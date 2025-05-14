@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, flash
 from lib.database_connection import get_flask_database_connection
 
 from lib.registration_values import RegistrationValues
@@ -184,7 +184,7 @@ def create_space():
     space = Space(None, name, description, price_per_night, user_id)
     repository.add_space(space)
 
-    Flask('Your space has been added to MakersBnB!')
+    flash('Your space has been added to MakersBnB!')
     return redirect(f'/myspaces/new')
 
 
