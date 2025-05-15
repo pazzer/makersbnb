@@ -66,8 +66,14 @@ INSERT INTO users (email_address, password, name) VALUES
 -- id: 7
 ('rory@example.com',
 '24326224313224584a7a6a5a4b4b4b474e5232756236784a68474b534f514f384f3068437638767430347a7531436278636d715466367539304b6757',
-'Rory');
+'Rory'),
 -- 4gtdWRT435Dn!£
+
+-- id: 8
+('laura@example.com',
+'243262243132246a65596e72596b696e61386455577039473441304d2e564447392e584246326a4858484d3747682f535073777674795a7941766857',
+'Laura');
+-- 23sdf728jgv[];!
 ------------------------ spaces ------------------------
 
 -- Delete (drop) all our tables
