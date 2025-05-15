@@ -3,21 +3,23 @@
 {% block title %}Your spaces | MakersBnB{% endblock %}
 
 {% block content %}
-    {% if spaces|length > 0 %}
     <h2>Your listed spaces:</h2>
-        <div id="manage_spaces_container">
+    <div id="manage_spaces_container">
+        {% if spaces|length > 0 %}
             {% for space in spaces %}
                 <div class="manage_space">
-                    <h4>{{space.name}}</p>
+                    <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" />
+                    <h4>{{space.name}}</h4>
                     <div class="manage_buttons_div">
                         <button><a href='/myspaces/bookings/{{space.space_id}}'>Confirmed bookings</a></button>
                         <button><a href='/myspaces/requests/{{space.space_id}}'>Requests to book</a></button>
                     </div>
                 </div>
             {% endfor %}
-        </div>
-    {% else %}
-        <h2>List a space with MakersBnB!</h2>
-            <a href="/myspaces/new">Click here to list a space</a>
-    {% endif %}
+    </div>
+        <a href="/myspaces/new">Click here to list another space</a>
+        {% else %}
+            <h2>List a space with MakersBnB!</h2>
+                <a href="/myspaces/new">Click here to list a space</a>
+        {% endif %}
 {% endblock %}

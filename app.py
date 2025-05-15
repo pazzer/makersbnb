@@ -15,9 +15,10 @@ from lib.space import Space
 
 from lib.available_range_repo import AvailableRangeRepo
 
-
 import mailtrap as mt
 from static.token import token
+
+from werkzeug.utils import secure_filename
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -109,8 +110,8 @@ def registration_succeeded():
 def show_login_form():
     if 'user_id' in session: del session['user_id']
     return render_template('login.html',
-                           values_so_far=LoginValues.all_empty(),
-                           no_active_session=True)
+                            values_so_far=LoginValues.all_empty(),
+                            no_active_session=True)
 
 @app.route('/login', methods=['POST'])
 def handle_login_request():
@@ -277,9 +278,21 @@ def create_space():
     name = request.form['name']
     description = request.form['description']
     price_per_night = request.form['price_per_night']
+    img_file = request.files['img_filename']
+    if img_file and img_file.filename != '':
+        filename = secure_filename(img_file.filename)
+        folder_path = os.path.join('static', 'images')
+        os.makedirs(folder_path, exist_ok=True)
+        save_path = os.path.join(folder_path, filename)
+        img_file.save(save_path)
+
+        img_filename = f'images/{filename}'
+    else:
+        flash('Image file is required')
+        return redirect('/myspaces/new')
     user_id = session.get('user_id', None)
 
-    space = Space(None, name, description, price_per_night, user_id)
+    space = Space(None, name, description, price_per_night, img_filename, user_id)
     repository.add_space(space)
 
     flash('Your space has been added to MakersBnB!')
@@ -330,7 +343,7 @@ def get_individual_space(space_id):
 # Creating a booking request
 # @app.route('/spaces/<int:space_id>/book', methods=['POST'])
 # def post_request(space_id):
-    
+
 #     connection = get_flask_database_connection(app)
 #     repository = BookingRepository(connection)
 

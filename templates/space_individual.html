@@ -6,7 +6,7 @@
 {% block content %}
 <div id="individual_space_container">
     <div class="individual_space">
-        <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" class="space img" />
+        <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" />
     </div>
     <div class="individual_space">
         <h4>{{ space.name }}</h4>
@@ -15,12 +15,13 @@
         <p>£{{ space.price_per_night }} per night</p>
         <p>Hosted by {{ owner.name }}</p>
 
-        <p>Available date ranges:</p>
+        <!-- <p>Available date ranges:</p>
         <ul>
             {% for range in available_ranges %}
             <li>{{ range.start_range }} to {{ range.end_range }}</li>
             {% endfor %}
-        </ul>
+        </ul> -->
+        <button><a href="/spaces/<int:space_id>/book">Book</a></button>
         <button><a href="/spaces">Go back</a></button>
     </div>
 </div>
