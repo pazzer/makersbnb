@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Exampled Extended Webpage{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h2 class="flash-messages">{{ message }}</h2>
+            {% endfor %}
+        <a href="/myspaces/new">List another space</a>
+        {% else %}
+            <h2>Tell us about your space:</h2>
+            <form action="/myspaces/new" method="POST">
+                <label for="name">Choose a name for your space:</label>
+                <input type="text" name="name" id="name" value="Fran's Cosy Cabin...">
+                <br>
+                <label for="description">Write a description:</label>
+                <input type="text" name="description" id="description" value="A small, cosy cabin in the middle of the woods...">
+                <br>
+                <label for="price_per_night">Price to stay per night: £</label>
+                <input type="number" name="price_per_night" id="price_per_night" value="120" min="5">
+                <br>
+                <input type="submit">
+            </form>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

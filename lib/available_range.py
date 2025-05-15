@@ -15,15 +15,20 @@ class AvailableRange:
             self.availability_id = availability_id
             self.start_range = start_range
             self.end_range = end_range
-            self.space_id = space_id
-            #raise NotImplementedError("Not Implemented")
-    
+            self.space_id = space_id    
 
         
+    @staticmethod
+    def from_rowdict(rowdict):
+        return AvailableRange(rowdict["availability_id"], rowdict["start_range"], rowdict["end_range"], rowdict["space_id"])
+
+    
+    
+    
     def contains(self, start_date, end_date):
         assert start_date < end_date, 'bad date, start cannot be bigger than end date'
 
-        return (self.start_range <= start_date < self.end_range) \
+        return (self.start_range <= start_date <= self.end_range) \
         and (self.end_range >= end_date)
 
     def __repr__(self):

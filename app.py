@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, flash
 from lib.database_connection import get_flask_database_connection
 
 from lib.registration_values import RegistrationValues
@@ -8,8 +8,12 @@ from lib.login_values import LoginValues
 from lib.custom_exceptions import MakersBnbException
 from lib.user_repository import UserRepository
 from lib.booking_repository import BookingRepository
+
+from lib.space import Space
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+
+from lib.available_range_repo import AvailableRangeRepo
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -139,8 +143,10 @@ def get_bookings(space_id):
 def get_requests(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
     requests = repository.view_requests(space_id)
-    return render_template('myspaces_requests.html', requests=requests)
+    return render_template('myspaces_requests.html', requests=requests, space=space)
 
 #  POST (DELETE) myspaces/requests/<space_id>/<booking_id>/reject
 # Deletes a request when it is rejected
@@ -161,6 +167,31 @@ def accept_request(booking_id, space_id):
     return redirect(f'/myspaces/requests/{space_id}')
 
 # -------------------------------------------- Spaces routes ---------------------------------------------------
+
+# GET / new space form page
+# Displays the form to create a new space
+@app.route('/myspaces/new', methods=['GET'])
+def new_space_form():
+    return render_template('myspaces_new.html')
+
+# POST / myspaces/new
+# CReates new space
+@app.route('/myspaces/new', methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    name = request.form['name']
+    description = request.form['description']
+    price_per_night = request.form['price_per_night']
+    user_id = session.get('user_id', None)
+
+    space = Space(None, name, description, price_per_night, user_id)
+    repository.add_space(space)
+
+    flash('Your space has been added to MakersBnB!')
+    return redirect(f'/myspaces/new')
+
 
 # GET / spaces
 # Shows user all spaces listed on our website as soon as they log in
@@ -186,6 +217,35 @@ def get_individual_space(space_id):
     user = user_repository.get_owner_of_space(space)
     return render_template('space_individual.html', space=space, owner=user)
 
+# GET spaces/filtered
+# Shows the user suitable spaces depending on their date range
+@app.route('/spaces', methods=['POST'])
+def get_filtered_spaces():
+    start_range = request.args.get('start_range')
+    end_range = request.args.get('end_range')
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    spaces = repository.list_spaces_by_date_range(start_range, end_range)
+    return render_template('spaces_all.html', spaces=spaces)
+
+
+# POST / spaces/<int:space_id>/book
+# Creating a booking request
+# @app.route('/spaces/<int:space_id>/book', methods=['POST'])
+# def post_request(space_id):
+    
+#     connection = get_flask_database_connection(app)
+#     repository = BookingRepository(connection)
+
+#     start_range = request.form['start_range']
+#     end_range = request.form['end_range']
+#     user_id = session.get('user_id', None)
+
+#     booking = BookingRepository(None, start_range, end_range, space_id, user_id, False)
+
+#     repository.create_request(booking)
+
+#     return redirect(f'/spaces/<int:space_id>/book/sent')
 
 # ------------------------------ manage spaces page ---------------------------------------------
 @app.route('/myspaces/manage', methods=['GET'])

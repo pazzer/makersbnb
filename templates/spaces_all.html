@@ -4,13 +4,27 @@
 
 {% block content %}
     <h2>Explore our spaces</h2>
-    {% for space, owner, emoji in spaces_and_owners %}
-        <div>
-            <h4 style="margin-bottom:-4px">{{emoji}} {{space.name}}</h4>
-            <p style="margin:12px 0 -4px 12px">{{space.description}}</p>
-            <p style="margin:12px 0 -4px 12px">£{{space.price_per_night}} per night</p>
-            <p style="margin:12px 0 -4px 12px">Hosted by {{owner.name}}</p>
-            <button style="margin:12px 0 -4px 12px"><a href='/spaces/{{space.space_id}}'>More info</a></button>
-        </div>
-    {% endfor %}
+    <div id="spaces_search_bar_div">
+        <form action="/spaces/filtered" method="GET" id="spaces_search_bar">
+            <label for="start_range">Check in date:</label>
+            <input type="date" name="start_range" id="start_range">
+            <label for="end_range">Check out date:</label>
+            <input type="date" name="end_range" id="end_range">
+            <input type="submit" value="&#128269;">
+    </form>
+    </div>
+    <div id="spaces_div">
+        {% for space in spaces %}
+            <div class="space">
+                <h4>{{space.name}}</h4>
+                <p>{{space.description}}</p>
+                <p class="price">£{{space.price_per_night}} per night</p>
+                <!-- <p>Hosted by {{space.user_id}}</p> -->
+                <div class="buttons_div">
+                    <button><a href='/spaces/{{space.space_id}}'>More info</button>
+                    <button><a href='/spaces/{{space.space_id}}/book'>Book</a></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
