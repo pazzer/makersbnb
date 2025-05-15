@@ -14,10 +14,17 @@ class DateFilterFormValues:
         end_date = to_date(request.form['end_date'])
         if not start_date < end_date:
             if returns_default_range_if_error:
-                return DateFilterFormValues(to_date('01/03/2025'), to_date('01/03/2027'))
+                return DateFilterFormValues(to_date('2025/03/01'), to_date('2027/03/01'))
             else:
                 return None
         else:
             return DateFilterFormValues(start_date, end_date)
 
 
+    def values(self):
+        return self.start_date, self.end_date
+
+    @staticmethod
+    def default_range():
+        # YYYY/MM/DD
+        return DateFilterFormValues(to_date('2025/5/16'), to_date('2025/05/31'))

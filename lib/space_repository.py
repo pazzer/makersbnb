@@ -1,5 +1,6 @@
 from lib.space import Space
 from lib.available_range import *
+from lib.user_repository import UserRepository
 
 class SpaceRepository:
     def __init__(self, _connection):
@@ -45,3 +46,12 @@ class SpaceRepository:
         rows = self._connection.execute(
             'SELECT * from spaces WHERE user_id = %s', [user_id])
         return [Space(row["space_id"], row["name"], row["description"], row["price_per_night"], row["user_id"]) for row in rows]
+
+
+
+    def spaces_and_owners_for_dates(self, lower_bound, upper_bound):
+        spaces = self.list_spaces_by_date_range(lower_bound, upper_bound)
+        user_repository = UserRepository(self._connection)
+        owners = [user_repository.find_by_id(space.user_id) for space in spaces]
+        return zip(spaces, owners)
+

@@ -13,10 +13,10 @@
         <header>
             <h1>MakersBnB</h1>
             <div id="header_links">
+                {% if no_active_session != True %}
                 <a href="/spaces">View Spaces</a>
                 <p>|</p>
                 <a href="/myspaces/manage">Manage Spaces</a>
-                {% if no_active_session != True %}
                 <p>|</p>
                 <a class="t-user-name" href="/login">{{ logged_in }}</a>
                 {% endif %}

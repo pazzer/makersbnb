@@ -1,5 +1,10 @@
 import os
-from flask import Flask, request, render_template, redirect, session, flash
+
+import flask
+from flask import Flask, request, render_template, redirect, session, flash, g, login_reqiored
+from flask_login import login_required
+
+from lib.BookingRequestFormValues import BookingRequestFormValues
 from lib.database_connection import get_flask_database_connection
 
 from lib.registration_values import RegistrationValues
@@ -9,11 +14,11 @@ from lib.custom_exceptions import MakersBnbException
 from lib.user_repository import UserRepository
 from lib.booking_repository import BookingRepository
 
-from lib.space import Space
+from lib.booking import Booking
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+from lib.util import to_date, format_date_range
 
-from lib.available_range_repo import AvailableRangeRepo
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -26,10 +31,7 @@ def get_session_user(db_conn):
     user_repository = UserRepository(db_conn)
     return user_repository.find_by_id(user_id)
 
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5001/index
+
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('example_base_extended.html')
@@ -40,36 +42,41 @@ def get_index():
 def empty_route():
     return redirect('/register')
 
+@app.context_processor
+def inject_user():
+    return dict(user=g.user)
+
 # ------------------------------- Registration and login  ---------------------------------------------------
 
-@app.route('/register')
-def show_registration_form():
-    return render_template('register.html', values_so_far=RegistrationValues.all_empty(), no_active_session=True)
-
-
-@app.route('/register', methods=["POST"])
+@app.route('/register', methods=['POST', 'GET'])
 def handle_registration_request():
-    registration_values = RegistrationValues.from_post_request(request)
+    if 'user_id' in session: del session['user_id']
+    if flask.request == 'GET':
+        registration_values = RegistrationValues.from_post_request(request)
 
-    db_conn = get_flask_database_connection(app)
-    user_repository = UserRepository(db_conn)
+        db_conn = get_flask_database_connection(app)
+        user_repository = UserRepository(db_conn)
 
-    if registration_values.has_errors():
-        first_error = registration_values.first_error()
-        return render_template(
-            'register.html',
-            errors=first_error,
-            values_so_far=registration_values)
-    else:
-        try:
-            user_repository.create_user(registration_values.email, registration_values.password_1)
-        except MakersBnbException as err:
+        if registration_values.has_errors():
+            first_error = registration_values.first_error()
             return render_template(
-                "register.html",
-                errors= str(err),
+                'register.html',
+                errors=first_error,
                 values_so_far=registration_values)
         else:
-            return render_template("registration_complete.html")
+            try:
+                user_repository.create_user(registration_values.email, registration_values.password_1)
+            except MakersBnbException as err:
+                return render_template(
+                    "register.html",
+                    errors= str(err),
+                    values_so_far=registration_values)
+            else:
+                return render_template("registration_complete.html")
+    else:
+        return render_template('register.html',
+                               values_so_far=RegistrationValues.all_empty(),
+                               no_active_session=True)
 
 
 @app.route('/registration_complete')
@@ -78,7 +85,7 @@ def registration_succeeded():
 
 
 # Login
-
+@login_required
 @app.route('/login')
 def show_login_form():
     if 'user_id' in session: del session['user_id']
@@ -109,10 +116,11 @@ def handle_login_request():
                 no_active_session=True)
         else:
             session['user_id'] = user.user_id
+            g.user
             return redirect('/spaces')
 
 
-# ⚠️ ⚠️ ⚠️ ⚠️ This must be removed prior to deployment ⚠️ ⚠️ ⚠️ ⚠️ #
+# ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
@@ -120,6 +128,7 @@ def log_in_developer():
     user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw')
     assert user is not None
     session['user_id'] = user.user_id
+
     return redirect('/spaces')
 
 @app.route('/logout')
@@ -200,63 +209,71 @@ def create_space():
     return redirect(f'/myspaces/new')
 
 
-# GET / spaces
-# Shows user all spaces listed on our website as soon as they log in
-@app.route('/spaces', methods=['GET'])
-def get_all_spaces():
-    connection = get_flask_database_connection(app)
-    user = get_session_user(connection)
-    space_repository  = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    spaces = space_repository.list_spaces()
-    owners = [user_repository.get_owner_of_space(space) for space in spaces]
-    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners), logged_in=user.name)
-
 # GET spaces/filtered
 # Shows the user suitable spaces depending on their date range
-@app.route('/spaces/filtered', methods=['POST'])
-def get_filtered_spaces():
+@app.route('/spaces', methods=['GET', 'POST'])
+def display_spaces():
     connection = get_flask_database_connection(app)
     user = get_session_user(connection)
+    if len(request.form) > 0:
+        date_field_values = DateFilterFormValues.from_post_request(request)
+    else:
+        date_field_values = DateFilterFormValues.default_range()
+
     space_repository = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    filter_range = DateFilterFormValues.from_post_request(request)
-    spaces = space_repository.list_spaces_by_date_range(filter_range.start_date, filter_range.end_date)
-    owners = [user_repository.find_by_id(space.user_id) for space in spaces]
-    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners), logger_in=user.name)
+    spaces_and_owners = space_repository.spaces_and_owners_for_dates(*date_field_values.values())
+    return render_template('spaces.html',
+                           spaces_and_owners=spaces_and_owners,
+                           date_range=date_field_values,
+                           logger_in=user.name)
 
 
 # GET / spaces/<int:space_id>
 # Shows user an individual space when they click a button to view more info or book
-@app.route('/spaces/<int:space_id>', methods=['GET'])
-def get_individual_space(space_id):
-    connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
-    space = repository.find(space_id)
-    user_repository = UserRepository(connection)
-    user = user_repository.get_owner_of_space(space)
-    return render_template('space_individual.html', space=space, owner=user)
+@app.route('/spaces/<int:space_id>/<start_date>+<end_date>', methods=['GET'])
+def display_space(space_id, start_date, end_date):
+    user_id = session.get('user_id', None)
+    if user_id is not None:
+        connection = get_flask_database_connection(app)
+        space_repository = SpaceRepository(connection)
+        space = space_repository.find(space_id)
+        user_repository = UserRepository(connection)
+        owner = user_repository.get_owner_of_space(space)
+        customer = user_repository.find_by_id(user_id)
+        start = to_date(start_date)
+        end = to_date(end_date)
+        formatted_range = format_date_range(start, end)
+
+        return render_template('space_individual.html',
+                               space=space,
+                               owner=owner,
+                               start_date=start,
+                               end_date=end,
+                               customer=customer,
+                               formatted_dates=formatted_range)
+    else:
+        return redirect('/login')
+
+
+@app.route('/spaces/book', methods=['POST'])
+def submit_booking_request():
+    user_id = session.get('user_id', None)
+    if user_id is not None:
+        connection = get_flask_database_connection(app)
+        repository = BookingRepository(connection)
+
+        booking_params = BookingRequestFormValues.from_post_request(request)
+        assert booking_params.customer_id == session['user_id']
+
+        booking = Booking(None, *booking_params.values(), False)
+        _ = repository.create_request(booking)
+        # return something! -> go to confirmation page.Lgon
+    else:
+        return redirect('/login')
 
 
 
 
-# POST / spaces/<int:space_id>/book
-# Creating a booking request
-# @app.route('/spaces/<int:space_id>/book', methods=['POST'])
-# def post_request(space_id):
-    
-#     connection = get_flask_database_connection(app)
-#     repository = BookingRepository(connection)
-
-#     start_range = request.form['start_range']
-#     end_range = request.form['end_range']
-#     user_id = session.get('user_id', None)
-
-#     booking = BookingRepository(None, start_range, end_range, space_id, user_id, False)
-
-#     repository.create_request(booking)
-
-#     return redirect(f'/spaces/<int:space_id>/book/sent')
 
 # ------------------------------ manage spaces page ---------------------------------------------
 @app.route('/myspaces/manage', methods=['GET'])
