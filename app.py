@@ -140,8 +140,10 @@ def get_bookings(space_id):
 def get_requests(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
     requests = repository.view_requests(space_id)
-    return render_template('myspaces_requests.html', requests=requests)
+    return render_template('myspaces_requests.html', requests=requests, space=space)
 
 #  POST (DELETE) myspaces/requests/<space_id>/<booking_id>/reject
 # Deletes a request when it is rejected
