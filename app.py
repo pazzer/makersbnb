@@ -209,14 +209,14 @@ def get_individual_space(space_id):
 
 # GET spaces/filtered
 # Shows the user suitable spaces depending on their date range
-@app.route('/spaces', methods=['GET'])
+@app.route('/spaces', methods=['POST'])
 def get_filtered_spaces():
     start_range = request.args.get('start_range')
     end_range = request.args.get('end_range')
     connection = get_flask_database_connection(app)
-    repository = AvailableRangeRepo(connection)
-    spaces = repository.list_all_available_spaces(start_range, end_range)
-    return render_template('spaces_filtered.html', spaces=spaces)
+    repository = SpaceRepository(connection)
+    spaces = repository.list_spaces_by_date_range(start_range, end_range)
+    return render_template('spaces_all.html', spaces=spaces)
 
 
 # POST / spaces/<int:space_id>/book
