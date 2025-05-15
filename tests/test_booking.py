@@ -50,7 +50,7 @@ def test_create_request(db_connection):
     assert repository.view_requests(MODERN_STUDIO) == [
 
         # Booking request just made by Dave
-        Booking(22, to_date('2025/06/06'), to_date('2025/06/09'), MODERN_STUDIO, DAVE, False),
+        Booking(23, to_date('2025/06/06'), to_date('2025/06/09'), MODERN_STUDIO, DAVE, False),
 
         # Booking request just made by Carol
         Booking(9, to_date('2025/07/02'), to_date('2025/07/06'), MODERN_STUDIO, CAROL, False),

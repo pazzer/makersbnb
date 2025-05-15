@@ -150,28 +150,29 @@ CREATE TABLE bookings (
 
 -- Add any records that are needed for the tests to run
 INSERT INTO bookings (start_range, end_range, space_id, user_id, is_confirmed) VALUES
-('2025-06-02', '2025-06-05', 1, 2, FALSE), --  Cozy Cabin, requested by bob
-('2025-06-06', '2025-06-09', 2, 3, FALSE), --  Urban Loft, requested by carol
-('2025-07-02', '2025-07-04', 3, 4, FALSE), --  Beach Bungalow, requested by dave
-('2025-07-16', '2025-07-20', 4, 5, FALSE), --  Mountain Retreat, requested by eve
-('2025-08-02', '2025-08-06', 5, 1, FALSE), --  Modern Studio, requested by alice
-('2025-08-04', '2025-08-11', 5, 2, TRUE), --  Modern Studio, requested by bob
-('2025-06-17', '2025-06-22', 5, 2, TRUE),  --  Modern Studio, requested by bob
-('2025-07-02', '2025-07-06', 5, 4, TRUE),  --  Modern Studio, requested by dave
-('2025-07-02', '2025-07-06', 5, 3, FALSE), --  Modern Studio, requested by carol
+('2025-06-02', '2025-06-05', 1, 2, FALSE), --  1, Cozy Cabin, requested by bob
+('2025-06-06', '2025-06-09', 2, 3, FALSE), --  2. Urban Loft, requested by carol
+('2025-07-02', '2025-07-04', 3, 4, FALSE), --  3, Beach Bungalow, requested by dave
+('2025-07-16', '2025-07-20', 4, 5, FALSE), --  4, Mountain Retreat, requested by eve
+('2025-08-02', '2025-08-06', 5, 1, FALSE), --  5, Modern Studio, requested by alice
+('2025-08-04', '2025-08-11', 5, 2, TRUE),  --  6, Modern Studio, requested by bob
+('2025-06-17', '2025-06-22', 5, 2, TRUE),  --  7, Modern Studio, requested by bob
+('2025-07-02', '2025-07-06', 5, 4, TRUE),  --  8, Modern Studio, requested by dave
+('2025-07-02', '2025-07-06', 5, 3, FALSE), --  9, Modern Studio, requested by carol
 
-('2025-09-12', '2025-09-14', 6, 2, FALSE),   -- Cool Castle, requested by Bob
-('2025-09-05', '2025-09-13', 6, 5, FALSE), -- Cool Castle, requested by Eve
-('2025-09-23', '2025-09-26', 6, 3, FALSE),  -- Cool Castle, requested by Carol
-('2025-09-21', '2025-09-23', 6, 4, FALSE),   -- Cool Castle, requested by Dave
-('2025-10-03', '2025-10-09', 6, 1, TRUE),    -- Cool Castle, requested by Alice
-('2025-10-13', '2025-10-28', 6, 5, FALSE),   -- Cool Castle, requested by Eve
-('2025-11-17', '2025-11-26', 6, 2, FALSE),  -- Cool Castle, requested by Bob
-('2025-11-30', '2025-12-03', 6, 3, FALSE),   -- Cool Castle, requested by Carol
-('2025-12-08', '2025-12-12', 6, 3, FALSE),   -- Cool Castle, requested by Carol
-('2025-12-09', '2025-12-12', 6, 2, FALSE),   -- Cool Castle, requested by Bob
-('2025-12-12', '2025-12-18', 6, 5, FALSE),   -- Cool Castle, requested by Eve
-('2025-12-25', '2025-12-28', 6, 4, TRUE);    -- Cool Castle, requested by Dave
+('2025-09-12', '2025-09-15', 6, 2, FALSE), -- 10, Cool Castle, requested by Bob
+('2025-09-05', '2025-09-13', 6, 5, FALSE), -- 11, Cool Castle, requested by Eve
+('2025-09-23', '2025-09-26', 6, 3, FALSE), -- 12, Cool Castle, requested by Carol
+('2025-09-21', '2025-09-23', 6, 4, FALSE), -- 13, Cool Castle, requested by Dave
+('2025-10-03', '2025-10-09', 6, 1, TRUE),  -- 14, Cool Castle, requested by Alice
+('2025-10-13', '2025-10-28', 6, 5, FALSE), -- 15, Cool Castle, requested by Eve
+('2025-11-17', '2025-11-26', 6, 2, TRUE), --  16, Cool Castle, requested by Bob
+('2025-11-30', '2025-12-03', 6, 3, FALSE), -- 17, Cool Castle, requested by Carol
+('2025-12-08', '2025-12-12', 6, 3, FALSE), -- 18, Cool Castle, requested by Carol
+('2025-12-09', '2025-12-12', 6, 2, FALSE), -- 19, Cool Castle, requested by Bob
+('2025-12-12', '2025-12-18', 6, 5, FALSE), -- 20, Cool Castle, requested by Eve
+('2025-12-23', '2025-12-25', 6, 4, TRUE),  -- 21, Cool Castle, requested by Dave
+('2025-12-29', '2025-12-31', 6, 4, TRUE);  -- 22, Cool Castle, requested by Dave
 
 
 
