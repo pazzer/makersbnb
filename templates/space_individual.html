@@ -18,7 +18,7 @@
     <form action="/spaces/book" method="post" id="make_booking_request">
         <input type="hidden" name="start_date" value={{start_date}}>
         <input type="hidden" name="end_date" value={{end_date}}>
-        <input type="hidden" name="customer_id" value={{customer.user_id}}>
+        <input type="hidden" name="customer_id" value={{current_user.user_id}}>
         <input type="hidden" name="space_id" value={{space.space_id}}>
         <button type="submit">Book</button>
     </form>

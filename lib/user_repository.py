@@ -3,6 +3,8 @@ from operator import truediv
 
 from lib.user import User
 import bcrypt
+
+from seed_dev_database import connection
 from .custom_exceptions import EmailAlreadyExistsError, MalformedPasswordError, MalformedEmailError, UnrecognisedIdError
 
 
@@ -118,3 +120,14 @@ class UserRepository:
         rows = self._connection.execute('SELECT * FROM users WHERE user_id = %s', [space.user_id])
         assert len(rows) == 1, f"{space.name} doesn't appear to have an owner!"
         return User.from_rowdict(rows[0])
+
+
+
+
+
+
+
+
+
+
+
