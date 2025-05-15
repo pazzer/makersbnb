@@ -14,7 +14,7 @@
         {% if requests|length < 1%}
             <p>You have no requests to book this space</p>
         {% else %}
-            <p>Your requests to book {{requests[0].space_id}}</p>
+            <p>Your requests to book {{space.name}}</p>
             {% for request in requests %}
                 <div>
                     <p>Guest: {{request.user_id}}</p>

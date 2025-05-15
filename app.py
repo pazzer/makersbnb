@@ -140,8 +140,10 @@ def get_bookings(space_id):
 def get_requests(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
     requests = repository.view_requests(space_id)
-    return render_template('myspaces_requests.html', requests=requests)
+    return render_template('myspaces_requests.html', requests=requests, space=space)
 
 #  POST (DELETE) myspaces/requests/<space_id>/<booking_id>/reject
 # Deletes a request when it is rejected
@@ -209,14 +211,14 @@ def get_individual_space(space_id):
 
 # GET spaces/filtered
 # Shows the user suitable spaces depending on their date range
-@app.route('/spaces', methods=['GET'])
+@app.route('/spaces', methods=['POST'])
 def get_filtered_spaces():
     start_range = request.args.get('start_range')
     end_range = request.args.get('end_range')
     connection = get_flask_database_connection(app)
-    repository = AvailableRangeRepo(connection)
-    spaces = repository.list_all_available_spaces(start_range, end_range)
-    return render_template('spaces_filtered.html', spaces=spaces)
+    repository = SpaceRepository(connection)
+    spaces = repository.list_spaces_by_date_range(start_range, end_range)
+    return render_template('spaces_all.html', spaces=spaces)
 
 
 # POST / spaces/<int:space_id>/book
