@@ -210,6 +210,11 @@ h2 {
     width: 50px;
 }
 
+#spaces_search_bar input[type="submit"]:hover {
+    outline: solid 3px hsla(358, 100%, 87%, 1);
+    cursor: pointer;
+}
+
 #spaces_div {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -298,6 +303,160 @@ h2 {
     margin: 0;
     border-radius: 20px;
 }
+
+/* -------------------------- myspaces/bookings styling ---------------------- */
+#bookings_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 20px 30px;
+}
+
+#bookings_container h2 {
+    color: black;
+    font-size: 2rem;
+    padding: 0 40px;
+}
+
+#bookings_container p {
+    padding: 0 60px;
+}
+
+#bookings_container a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+#booking_p {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#bookings_inds_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    background-color: hsla(0, 5%, 95%, 1);
+    border-radius: 20px;
+    max-width: 400px;
+    padding: 10px 5px;
+}
+
+.booking_info {
+    align-self: center;
+}
+
+.booking hr {
+    width: 85%;
+    align-self: center;
+}
+
+.payment_div {
+    text-align: right;
+}
+
+.payment_equation {
+    font-size: 0.7rem;
+}
+
+.total_price {
+    color: hsla(358, 100%, 67%, 1);
+}
+
+
+
+/* ------------------------- myspaces/requests styling --------------------------- */
+#requests_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 20px 30px;
+}
+
+#requests_container h2 {
+    color: black;
+    font-size: 2rem;
+    padding: 0 40px;
+}
+
+#requests_container p {
+    padding: 0 80px;
+}
+
+#requests_container a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+#requests_p {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#requests_inds_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.request {
+    display: flex;
+    flex-direction: column;
+    background-color: hsla(0, 5%, 95%, 1);
+    border-radius: 20px;
+    max-width: 400px;
+    padding: 10px 5px;
+}
+
+.request_info {
+    align-self: center;
+}
+
+.request hr {
+    width: 85%;
+    align-self: center;
+}
+
+.payment_div {
+    text-align: right;
+}
+
+.payment_equation {
+    font-size: 0.6rem;
+}
+
+.total_price {
+    color: hsla(358, 100%, 67%, 1);
+}
+
+.request_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.request button {
+    padding: 10px;
+    margin: 10px 25px;
+    border-radius: 20px;
+    width: 70px;
+}
+
+.request button:hover {
+    outline: solid 2px hsla(358, 100%, 87%, 1);
+    cursor: pointer;
+}
+
+
 
 
 /* ------------------------ footer styling ------------------------ */
