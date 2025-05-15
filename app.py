@@ -67,6 +67,28 @@ def handle_registration_request():
                 errors= str(err),
                 values_so_far=registration_values)
         else:
+
+            #email stuff
+            user_email = registration_values.email
+
+            #
+
+            mail = mt.Mail(
+            sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+            to=[mt.Address(email="eveiaim98@outlook.com")],
+            subject="Thank you for registering!",
+            text=f"{user_email} has just been registered to makersbnb",
+            category="Integration Test",
+            )
+
+            client = mt.MailtrapClient(token = token())
+            response = client.send(mail)
+
+            print(response)
+            #
+
+
+
             return render_template("registration_complete.html")
 
 
@@ -218,7 +240,7 @@ def accept_request(booking_id, space_id):
     category="Integration Test",
     )
 
-    client = mt.MailtrapClient(token = token())
+    client = mt.MailtrapClient(token = token()) #just copy paste the token as a string here
     response = client.send(mail)
 
     print(response)
