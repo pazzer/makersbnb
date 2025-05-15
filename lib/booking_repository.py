@@ -13,6 +13,15 @@ class BookingRepository:
             spaces.append(item)
         return spaces
 
+    #email stuff
+    def view_by_id(self, booking_id):
+        rows = self.connection.execute('SELECT * FROM bookings WHERE booking_id = %s', [booking_id])
+        row = rows[0]
+        item = Booking(row['booking_id'], row['start_range'], row['end_range'], row['space_id'], row['user_id'], row['is_confirmed'])
+        return item
+
+
+
     # See all requests (unconfirmed bookings) for a space
     def view_requests(self, space_id):
         rows = self.connection.execute('SELECT * FROM bookings WHERE space_id = %s AND is_confirmed = FALSE ORDER BY start_range', [space_id])
