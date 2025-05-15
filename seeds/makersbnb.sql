@@ -30,7 +30,7 @@ INSERT INTO users (email_address, password, name) VALUES
 -- id: 1
 ('alice@example.com',
 '243262243132244c637232783267554c6b4b677a3472754c645857306567476451522f38517346646c52426d7334736a547159656372445037733769',
-'Eve'),
+'Alice'),
 -- password123!
 
 -- id: 2

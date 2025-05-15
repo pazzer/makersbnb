@@ -1,6 +1,6 @@
 from lib.space_repository import SpaceRepository
 from lib.space import Space
-from lib.util import str_to_date
+from lib.util import to_date
 
 def space_name_in_list(_list, space_name):
     for space in _list:
@@ -67,8 +67,8 @@ def test_date_range_accepted_by_cozy_cabin(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
 
-    holiday_start = str_to_date("2025-06-01")
-    holiday_end = str_to_date("2025-06-10")
+    holiday_start = to_date("2025-06-01")
+    holiday_end = to_date("2025-06-10")
 
     result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
     assert space_name_in_list(result, 'Cozy Cabin')
@@ -80,8 +80,8 @@ def test_date_range_accepted_by_two(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
 
-    holiday_start = str_to_date("2025-06-05")
-    holiday_end = str_to_date("2025-06-10")
+    holiday_start = to_date("2025-06-05")
+    holiday_end = to_date("2025-06-10")
 
     result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
     assert space_name_in_list(result, 'Cozy Cabin')
@@ -93,8 +93,8 @@ def test_date_range_has_no_matching_spaces(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
 
-    holiday_start = str_to_date("2016-06-05")
-    holiday_end = str_to_date("2025-06-10")
+    holiday_start = to_date("2016-06-05")
+    holiday_end = to_date("2025-06-10")
 
     result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
     assert len(result) == 0

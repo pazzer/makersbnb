@@ -22,7 +22,7 @@ class SpaceRepository:
 
         available_spaces = []
         for space in self.list_spaces():
-            rows = self._connection.execute("SELECT * FROM availabileRanges WHERE space_id = %s ", [space.space_id])
+            rows = self._connection.execute("SELECT * FROM available_ranges WHERE space_id = %s ", [space.space_id])
             available_range = AvailableRange.from_rowdict(rows[0])
             if available_range.contains(holiday_start, holiday_end):
                 available_spaces.append(space)

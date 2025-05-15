@@ -63,7 +63,8 @@ class UserRepository:
             UserRepository._run_email_checks(email)
             UserRepository._run_password_checks(password)
             hashed_password = UserRepository._prepare_password_for_storage(password)
-            self._connection.execute("INSERT INTO users (email_address, password) VALUES (%s, %s)", [email, hashed_password])
+            self._connection.execute("INSERT INTO users (email_address, password, name) VALUES (%s, %s, %s)",
+                                     [email, hashed_password, email])
 
 
     @staticmethod
