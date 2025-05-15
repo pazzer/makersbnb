@@ -129,7 +129,7 @@ def test_can_register_valid_password(db_connection):
 
 #### Checking login credentials
 
-def test_check_password_rejects_wrong_password(db_connection):
+def test_wrong_password_rejected(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     user_repository = UserRepository(db_connection)
     assert not user_repository.find_by_email_and_password('alice@example.com', 'password123')
@@ -138,7 +138,7 @@ def test_check_password_rejects_wrong_password(db_connection):
     assert not user_repository.find_by_email_and_password('dave@example.com', '&&let&mei&n32')
     assert not user_repository.find_by_email_and_password('eve@example.com', 'a@dmi£n123')
 
-def test_check_password_accepts_correct_password(db_connection):
+def test_correct_password_accepted(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     user_repository = UserRepository(db_connection)
     assert user_repository.find_by_email_and_password('alice@example.com', 'password123!')

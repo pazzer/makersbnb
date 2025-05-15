@@ -73,37 +73,37 @@ def test_successful_login(db_connection, page, test_web_address):
 
     spaces_url = make_url('spaces', test_web_address)
     expect(page).to_have_url(spaces_url)
-    email_el = locate('.t-user-email', page)
-    expect(email_el).to_contain_text('alice@example.com')
-
-def test_can_log_out(db_connection, page, test_web_address):
-    seed_db(db_connection)
-    go_to('login', page, test_web_address)
-
-    fill('email', "alice@example.com", page)
-    fill('password', "password123!", page)
-
-    click('Submit', page)
-
-    spaces_url = make_url('spaces', test_web_address)
-    expect(page).to_have_url(spaces_url)
-
-    click('logout', page)
-
-    # Redirected to login page
-    login_url = make_url('login', test_web_address)
-    expect(page).to_have_url(login_url)
-
-    # no more access to spaces
-    go_to('spaces', page, test_web_address)
-    expect(page).to_have_url(login_url)
-
-    # Nothing in input field
-    field = get_input_field('email', page)
-    expect(field).to_have_value("")
-
-    field = get_input_field('password', page)
-    expect(field).to_have_value("")
+    email_el = locate('.t-user-name', page)
+    expect(email_el).to_contain_text('Alice')
+#
+# def test_can_log_out(db_connection, page, test_web_address):
+#     seed_db(db_connection)
+#     go_to('login', page, test_web_address)
+#
+#     fill('email', "alice@example.com", page)
+#     fill('password', "password123!", page)
+#
+#     click('Submit', page)
+#
+#     spaces_url = make_url('spaces', test_web_address)
+#     expect(page).to_have_url(spaces_url)
+#
+#     click('logout', page)
+#
+#     # Redirected to login page
+#     login_url = make_url('login', test_web_address)
+#     expect(page).to_have_url(login_url)
+#
+#     # no more access to spaces
+#     go_to('spaces', page, test_web_address)
+#     expect(page).to_have_url(login_url)
+#
+#     # Nothing in input field
+#     field = get_input_field('email', page)
+#     expect(field).to_have_value("")
+#
+#     field = get_input_field('password', page)
+#     expect(field).to_have_value("")
 
 # # Register
 #

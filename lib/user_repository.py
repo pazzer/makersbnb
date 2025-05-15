@@ -63,7 +63,8 @@ class UserRepository:
             UserRepository._run_email_checks(email)
             UserRepository._run_password_checks(password)
             hashed_password = UserRepository._prepare_password_for_storage(password)
-            self._connection.execute("INSERT INTO users (email_address, password) VALUES (%s, %s)", [email, hashed_password])
+            self._connection.execute("INSERT INTO users (email_address, password, name) VALUES (%s, %s, %s)",
+                                     [email, hashed_password, email])
 
 
     @staticmethod
@@ -112,3 +113,8 @@ class UserRepository:
             raise MalformedPasswordError('password must contain at least one of the following characters: ! @ £ $ % ^ & ')
         else:
             return
+
+    def get_owner_of_space(self, space):
+        rows = self._connection.execute('SELECT * FROM users WHERE user_id = %s', [space.user_id])
+        assert len(rows) == 1, f"{space.name} doesn't appear to have an owner!"
+        return User.from_rowdict(rows[0])
