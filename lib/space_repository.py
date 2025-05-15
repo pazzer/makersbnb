@@ -17,12 +17,12 @@ class SpaceRepository:
     def list_spaces_by_date_range(self, holiday_start, holiday_end):
         '''
         1) need to check that the supplied dates fall within the available range for a property [done]
-        2) take our results from the first filter and look at every booking and check that our date range doesen't overlap 
+        2) take our results from the first filter and look at every booking and check that our date range doesen't overlap
         '''
 
         available_spaces = []
         for space in self.list_spaces():
-            rows = self._connection.execute("SELECT * FROM availabileRanges WHERE space_id = %s ", [space.space_id])
+            rows = self._connection.execute("SELECT * FROM available_ranges WHERE space_id = %s ", [space.space_id])
             available_range = AvailableRange.from_rowdict(rows[0])
             if available_range.contains(holiday_start, holiday_end):
                 available_spaces.append(space)

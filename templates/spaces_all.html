@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}MakersBnB Spaces{% endblock %}
+<!--{% block title %}MakersBnB Spaces{% endblock %}-->
 
 {% block content %}
     <h2>Explore our spaces</h2>
     <div id="spaces_search_bar_div">
-        <form action="/spaces/filtered" method="GET" id="spaces_search_bar">
-            <label for="start_range">Check in date:</label>
-            <input type="date" name="start_range" id="start_range">
-            <label for="end_range">Check out date:</label>
-            <input type="date" name="end_range" id="end_range">
+        <form action="/spaces/filtered" method="POST" id="spaces_search_bar">
+            <label for="start_date">Check in:</label>
+            <input type="date" name="start_date" id="start_date">
+            <label for="end_date">Check out:</label>
+            <input type="date" name="end_date" id="end_date">
             <input type="submit" value="&#128269;">
     </form>
     </div>
     <div id="spaces_div">
-        {% for space in spaces %}
+        {% for (space, owner) in spaces_and_owners %}
             <div class="space">
                 <a href='/spaces/{{space.space_id}}'><img src="{{ url_for('static', filename=space.img_filename) }}" alt="{{ space.name }}"></a>
                 <h4>

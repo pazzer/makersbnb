@@ -3,7 +3,7 @@
 {% block title %}Your spaces | MakersBnB{% endblock %}
 
 {% block content %}
-    {% if spaces|length > 1 %}
+    {% if spaces|length > 0 %}
     <h2>Your listed spaces:</h2>
         <div id="manage_spaces_container">
             {% for space in spaces %}
@@ -20,5 +20,4 @@
         <h2>List a space with MakersBnB!</h2>
             <a href="/myspaces/new">Click here to list a space</a>
     {% endif %}
-        
 {% endblock %}

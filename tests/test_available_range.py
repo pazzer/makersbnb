@@ -7,7 +7,7 @@ summer = ('2025-06-01','2025-09-01')
 autumn = ('2025-09-01','2025-12-01')
 winter = ('2025-12-01','2026-03-01')
 
-def str_to_date(the_string):
+def to_date(the_string):
     return datetime.strptime(the_string, "%Y-%m-%d").date()
 
 '''
@@ -33,14 +33,14 @@ never strings
 
 def test_available_range_does_contain_passed_dates():
     property_available = summer[0], summer[1]
-    my_annual_leave = str_to_date('2025-07-18'), str_to_date('2025-07-25')
+    my_annual_leave = to_date('2025-07-18'), to_date('2025-07-25')
     ar = AvailableRange(2,property_available[0], property_available[1],10)
     does_contain = ar.contains(my_annual_leave[0],my_annual_leave[1])
     assert does_contain == True
 
 def test_available_range_does_not_contain_passed_dates():
     property_available = summer[0], summer[1]
-    my_annual_leave = str_to_date('2025-07-18'), str_to_date('2030-07-25')
+    my_annual_leave = to_date('2025-07-18'), to_date('2030-07-25')
     ar = AvailableRange(8,property_available[0], property_available[1],10)
     does_contain = ar.contains(my_annual_leave[0],my_annual_leave[1])
     assert does_contain == False
