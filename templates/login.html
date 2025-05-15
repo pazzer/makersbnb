@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title class="t-title">User Login</title>
-</head>
-<body>
-<h1>🔑 Log in to makersbnb</h1>
-<form action="/login" method="post">
+{% extends "base.html" %}
+
+{% block title %}MakersBnB | Log in{% endblock %}
+
+{% block content %}
+<div id="log_in_container">
+    <h1>🔑 Log in to makersbnb</h1>
+    <form action="/login" method="post">
     <!-- We check to see if there are any errors from a previous submission -->
     <p>If you don't have an account yet, please <a href="/">register</a></p>
     {% if errors %}
@@ -34,5 +33,5 @@
         <input type="submit" value="🔨 Developer Login">
     </p>
 </form>
-</body>
-</html>
+</div>
+{% endblock %}
