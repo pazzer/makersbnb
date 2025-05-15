@@ -4,13 +4,14 @@ from lib.database_connection import get_flask_database_connection
 
 from lib.registration_values import RegistrationValues
 from lib.login_values import LoginValues
-
+from lib.date_filter_form_values import DateFilterFormValues
 from lib.custom_exceptions import MakersBnbException
 from lib.user_repository import UserRepository
 from lib.booking_repository import BookingRepository
 
 from lib.space import Space
 from lib.space_repository import SpaceRepository
+from lib.space import Space
 
 from lib.available_range_repo import AvailableRangeRepo
 
@@ -23,6 +24,11 @@ app = Flask(__name__)
 
 # `session` admin
 app.secret_key = os.urandom(24)
+
+def get_session_user(db_conn):
+    user_id = session['user_id']
+    user_repository = UserRepository(db_conn)
+    return user_repository.find_by_id(user_id)
 
 # GET /index
 # Returns the homepage
@@ -42,7 +48,7 @@ def empty_route():
 
 @app.route('/register')
 def show_registration_form():
-    return render_template('register.html', values_so_far=RegistrationValues.all_empty())
+    return render_template('register.html', values_so_far=RegistrationValues.all_empty(), no_active_session=True)
 
 
 @app.route('/register', methods=["POST"])
@@ -101,7 +107,10 @@ def registration_succeeded():
 
 @app.route('/login')
 def show_login_form():
-    return render_template('login.html', values_so_far=LoginValues.all_empty())
+    if 'user_id' in session: del session['user_id']
+    return render_template('login.html',
+                           values_so_far=LoginValues.all_empty(),
+                           no_active_session=True)
 
 @app.route('/login', methods=['POST'])
 def handle_login_request():
@@ -114,14 +123,16 @@ def handle_login_request():
         return render_template(
             'login.html',
             errors="⚠️ " + login_values.first_error(),
-            values_so_far=login_values)
+            values_so_far=login_values,
+            no_active_session=True)
     else:
         user = user_repository.find_by_email_and_password(login_values.email, login_values.password)
         if user is None:
             return render_template(
                 'login.html',
                 errors="⛔ email and/or password not recognised. Try Again.",
-                values_so_far=login_values)
+                values_so_far=login_values,
+                no_active_session=True)
         else:
             session['user_id'] = user.user_id
             return redirect('/spaces')
@@ -144,7 +155,6 @@ def log_out():
         user_repository = UserRepository(db_conn)
         user = user_repository.find_by_id(session['user_id'])
         del session['user_id']
-
     return redirect('/login')
 
 
@@ -280,11 +290,27 @@ def create_space():
 # Shows user all spaces listed on our website as soon as they log in
 @app.route('/spaces', methods=['GET'])
 def get_all_spaces():
-    session['user_id'] = 1
     connection = get_flask_database_connection(app)
-    repository  = SpaceRepository(connection)
-    spaces = repository.list_spaces()
-    return render_template('spaces_all.html', spaces=spaces)
+    user = get_session_user(connection)
+    space_repository  = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    spaces = space_repository.list_spaces()
+    owners = [user_repository.get_owner_of_space(space) for space in spaces]
+    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners), logged_in=user.name)
+
+# GET spaces/filtered
+# Shows the user suitable spaces depending on their date range
+@app.route('/spaces/filtered', methods=['POST'])
+def get_filtered_spaces():
+    connection = get_flask_database_connection(app)
+    user = get_session_user(connection)
+    space_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+    filter_range = DateFilterFormValues.from_post_request(request)
+    spaces = space_repository.list_spaces_by_date_range(filter_range.start_date, filter_range.end_date)
+    owners = [user_repository.find_by_id(space.user_id) for space in spaces]
+    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners), logger_in=user.name)
+
 
 # GET / spaces/<int:space_id>
 # Shows user an individual space when they click a button to view more info or book
@@ -293,18 +319,11 @@ def get_individual_space(space_id):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.find(space_id)
-    return render_template('space_individual.html', space=space)
+    user_repository = UserRepository(connection)
+    user = user_repository.get_owner_of_space(space)
+    return render_template('space_individual.html', space=space, owner=user)
 
-# GET spaces/filtered
-# Shows the user suitable spaces depending on their date range
-@app.route('/spaces', methods=['POST'])
-def get_filtered_spaces():
-    start_range = request.args.get('start_range')
-    end_range = request.args.get('end_range')
-    connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
-    spaces = repository.list_spaces_by_date_range(start_range, end_range)
-    return render_template('spaces_all.html', spaces=spaces)
+
 
 
 # POST / spaces/<int:space_id>/book
