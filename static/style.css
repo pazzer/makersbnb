@@ -275,6 +275,7 @@ h2 {
     padding: 10px;
     border-radius: 20px;
     padding: 30px 20px 20px 30px;
+    max-width: 400px;
 }
 
 .manage_space h4 {
@@ -292,16 +293,83 @@ h2 {
     font-size: 0.7rem;
 }
 
-.manage_space .manage_buttons_div {
+.manage_buttons_div {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 20px;
+}
+
+.manage_buttons_div button {
+    margin: 10px 30px;
 }
 
 .manage_space button {
     background-color: hsla(358, 100%, 67%, 1);
     padding: 10px;
-    margin: 0;
     border-radius: 20px;
+}
+
+.new_space {
+    margin: 30px;
+    padding: 20px;
+}
+
+.new_space h3 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.new_space a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    padding-left: 10px;
+    font-size: 1.2rem;
+}
+
+/* -------------------------- new myspace styling ---------------------------- */
+.back_link {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2.2rem;
+    padding: 30px;
+}
+
+
+.new_space_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new_space_container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.new_space_container label {
+    padding-right: 10px;
+    font-size: 1.1rem;
+}
+
+.new_space_container input {
+    color: black;
+    background-color: hsla(0, 5%, 97%, 1);
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.new_space_container input:focus {
+    outline: solid 2px hsla(358, 100%, 67%, 1)
+}
+
+.new_space_container input[type="submit"] {
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border-radius: 20px;
+    padding: 10px;
 }
 
 /* -------------------------- myspaces/bookings styling ---------------------- */
