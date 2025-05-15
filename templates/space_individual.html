@@ -2,16 +2,26 @@
 
 {% block title %}MakersBnB | {{space.name}}{% endblock %}
 
+
 {% block content %}
-    <h4>{{space.name}}</h4>
-    <p>{{space.description}}</p>
-    <p>£{{space.price_per_night}} per night</p>
-    <p>Hosted by {{space.user_id}}</p>
-    <p>Available date ranges:</p>
-    <ul>
-        <li>First date range</li>
-        <li>Second date range</li>
-        <li>etc</li>
-    </ul>
-    <button><a href='/spaces'>Go back</a></button>
+<div id="individual_space_container">
+    <div class="individual_space">
+        <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" class="space img" />
+    </div>
+    <div class="individual_space">
+        <h4>{{ space.name }}</h4>
+        <br>
+        <p>{{ space.description }}</p>
+        <p>£{{ space.price_per_night }} per night</p>
+        <p>Hosted by {{ space.user_id }}</p>
+
+        <p>Available date ranges:</p>
+        <ul>
+            {% for range in available_ranges %}
+            <li>{{ range.start_range }} to {{ range.end_range }}</li>
+            {% endfor %}
+        </ul>
+        <button><a href="/spaces">Go back</a></button>
+    </div>
+</div>
 {% endblock %}

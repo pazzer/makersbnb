@@ -16,7 +16,10 @@
     <div id="spaces_div">
         {% for space in spaces %}
             <div class="space">
-                <h4>{{space.name}}</h4>
+                <a href='/spaces/{{space.space_id}}'><img src="{{ url_for('static', filename=space.img_filename) }}" alt="{{ space.name }}"></a>
+                <h4>
+                    <a href='/spaces/{{space.space_id}}'>{{space.name}}</a>
+                </h4>
                 <p>{{space.description}}</p>
                 <p class="price">£{{space.price_per_night}} per night</p>
                 <!-- <p>Hosted by {{space.user_id}}</p> -->

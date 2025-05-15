@@ -22,11 +22,11 @@ def test_get_all_spaces(db_connection):
     spaces = repository.list_spaces()
 
     assert spaces == [
-        Space(1, 'Cozy Cabin', 'Rustic cabin in the forest.', 100, 1),
-        Space(2, 'Urban Loft', 'Sleek apartment in downtown.', 150, 2),
-        Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
-        Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
-        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5)
+        Space(1, 'Cozy Cabin', 'Rustic cabin in the forest.', 100, 'images/cozy-cabin.jpg', 1),
+        Space(2, 'Urban Loft', 'Sleek apartment in downtown.', 150, 'images/urban-loft.jpg', 2),
+        Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 'images/beach-bungalow.jpg', 3),
+        Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 'images/mountain-retreat.jpg', 4),
+        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 'images/modern-studio.jpg', 5)
     ]
 
 """
@@ -39,18 +39,18 @@ def test_add_space(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
 
-    new_space = Space(None, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 1)
+    new_space = Space(None, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 'images/cardboard-box.jpg', 1)
     repository.add_space(new_space)
     
     spaces = repository.list_spaces()
 
     assert spaces == [
-        Space(1, 'Cozy Cabin', 'Rustic cabin in the forest.', 100, 1),
-        Space(2, 'Urban Loft', 'Sleek apartment in downtown.', 150, 2),
-        Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
-        Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
-        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5),
-        Space(6, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 1)
+        Space(1, 'Cozy Cabin', 'Rustic cabin in the forest.', 100, 'images/cozy-cabin.jpg', 1),
+        Space(2, 'Urban Loft', 'Sleek apartment in downtown.', 150, 'images/urban-loft.jpg', 2),
+        Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 'images/beach-bungalow.jpg', 3),
+        Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 'images/mountain-retreat.jpg', 4),
+        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 'images/modern-studio.jpg', 5),
+        Space(6, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 'images/cardboard-box.jpg', 1)
     ]
 
 

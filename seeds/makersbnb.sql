@@ -68,18 +68,19 @@ CREATE TABLE spaces (
     name VARCHAR(255),
     description VARCHAR(255),
     price_per_night INT,
+    img_filename VARCHAR(255),
     user_id INT,
         CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id)
         ON DELETE CASCADE
 );
 
 -- Add any records that are needed for the tests to run
-INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
-('Cozy Cabin', 'Rustic cabin in the forest.', 100, 1),
-('Urban Loft', 'Sleek apartment in downtown.', 150, 2),
-('Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
-('Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
-('Modern Studio', 'Compact yet luxurious.', 120, 5);
+INSERT INTO spaces (name, description, price_per_night, img_filename, user_id) VALUES
+('Cozy Cabin', 'Rustic cabin in the forest.', 100, 'images/cozy-cabin.jpg', 1),
+('Urban Loft', 'Sleek apartment in downtown.', 150, 'images/urban-loft.jpg', 2),
+('Beach Bungalow', 'Sunny spot by the sea.', 200, 'images/beach-bungalow.jpg', 3),
+('Mountain Retreat', 'Quiet escape in the hills.', 180, 'images/mountain-retreat.jpg', 4),
+('Modern Studio', 'Compact yet luxurious.', 120, 'images/modern-studio.jpg', 5);
 
 ------------------------ availabileRanges ------------------------
 

@@ -210,7 +210,31 @@ h2 {
     color: hsla(358, 100%, 67%, 1);
 }
 
-.space a, button {
+.space img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.space img, .space a {
+    border: none;
+    text-decoration: none;
+    display: block;
+    border-radius: 20px;
+}
+
+.space h4 a {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    font-weight: inherit;
+    display: inline;
+    background-color: inherit;
+}
+
+.space button, .space a {
     text-decoration: none;
     color: white;
     background-color: hsla(358, 100%, 67%, 1);
@@ -228,6 +252,52 @@ h2 {
     background-color: hsla(358, 100%, 67%, 1);
     margin: 10px 25px 10px 25px;
     padding: 10px;
+    border-radius: 20px;
+}
+
+/* --------------------------- individual space page styling ------------------------- */
+
+#individual_space_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 30px;
+    row-gap: 20px;
+    padding: 30px;
+}
+
+.individual_space {
+    background-color: hsla(0, 5%, 98%, 1);
+    border-radius: 20px;
+    padding: 30px 20px 20px 30px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.individual_space h4 {
+    font-size: 1.2rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.individual_space img {
+    width: 100%;
+    height: auto;
+    max-width: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.individual_space a, .individual_space button {
+    text-decoration: none;
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border: none;
+    box-shadow: none;
+    font-size: 0.7rem;
+    padding: 10px;
+    margin: 0;
     border-radius: 20px;
 }
 
