@@ -15,6 +15,10 @@ from lib.space import Space
 
 from lib.available_range_repo import AvailableRangeRepo
 
+
+import mailtrap as mt
+from static.token import token
+
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -69,6 +73,28 @@ def handle_registration_request():
                 errors= str(err),
                 values_so_far=registration_values)
         else:
+
+            #email stuff
+            user_email = registration_values.email
+
+            #
+
+            mail = mt.Mail(
+            sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+            to=[mt.Address(email="eveiaim98@outlook.com")],
+            subject="Thank you for registering!",
+            text=f"{user_email} has just been registered to makersbnb",
+            category="Integration Test",
+            )
+
+            client = mt.MailtrapClient(token = token())
+            response = client.send(mail)
+
+            print(response)
+            #
+
+
+
             return render_template("registration_complete.html")
 
 
@@ -161,8 +187,39 @@ def get_requests(space_id):
 def delete_request(booking_id, space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
+    
+
+    #email stuff
+    user_repo = UserRepository(connection)
+    booking = repository.view_by_id(booking_id)
+    user_id = booking.user_id
+    user = user_repo.find_by_id(user_id)
+    user_email = user.email_address
+
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(space_id)
+    space_name = space.name
+
+    #
+
+    mail = mt.Mail(
+    sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+    to=[mt.Address(email="eveiaim98@outlook.com")],
+    subject="Booking Rejection of makersbnb!",
+    text=f"{user_id} your booking for {space_name} has been denied by admin",
+    category="Integration Test",
+    )
+
+    client = mt.MailtrapClient(token = token())
+    response = client.send(mail)
+
+    print(response)
+    #
+
+    #normal stuff
     repository.reject_request(booking_id)
     return redirect(f'/myspaces/requests/{space_id}')
+
 
 # POST (PUT) myspaces/requests/<space_id>/<booking_id>/accept
 # Accepts a booking request and changes is_confirmed to true
@@ -171,6 +228,35 @@ def accept_request(booking_id, space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
     repository.approve_request(booking_id)
+
+    #email stuff
+    user_repo = UserRepository(connection)
+    booking = repository.view_by_id(booking_id)
+    user_id = booking.user_id
+    user = user_repo.find_by_id(user_id)
+    user_email = user.email_address
+
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(space_id)
+    space_name = space.name
+
+    #
+
+    mail = mt.Mail(
+    sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+    to=[mt.Address(email="eveiaim98@outlook.com")],
+    subject="Booking Confirmation of makersbnb!",
+    text=f"{user_id} your booking for {space_name} has been confirmed by admin",
+    category="Integration Test",
+    )
+
+    client = mt.MailtrapClient(token = token()) #just copy paste the token as a string here
+    response = client.send(mail)
+
+    print(response)
+    #
+
+    #normal stuff
     return redirect(f'/myspaces/requests/{space_id}')
 
 # -------------------------------------------- Spaces routes ---------------------------------------------------

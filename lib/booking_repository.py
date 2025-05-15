@@ -13,6 +13,16 @@ class BookingRepository:
             spaces.append(item)
         return spaces
 
+    #email stuff
+    def view_by_id(self, booking_id):
+        rows = self.connection.execute('SELECT * FROM bookings WHERE booking_id = %s', [booking_id])
+        row = rows[0]
+        item = Booking(row['booking_id'], row['start_range'], row['end_range'], row['space_id'], row['user_id'], row['is_confirmed'])
+        return item
+
+
+
+    # See all requests (unconfirmed bookings) for a space
 
     def view_requests(self, space_id):
         '''See all requests (unconfirmed bookings) for a given space_id'''
@@ -39,6 +49,8 @@ class BookingRepository:
     # Approve a booking request aka is_confirmed FALSE to TRUE| basic approve request which bares no effect on on other requests for the same space on overlapping days
     def approve_request(self, booking_id):
         rows = self.connection.execute('UPDATE bookings SET is_confirmed = TRUE WHERE booking_id = %s', [booking_id])
+
+
 
     def has_confirmed_booking(self, space_id, start_date, end_date):
         'Returns True if the provided space has a booking that overlaps the provided range'
