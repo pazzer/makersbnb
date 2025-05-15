@@ -17,7 +17,8 @@ def test_album_repo_list(db_connection):
         AvailableRange(2,'2025-06-05', '2025-06-15', 2),
         AvailableRange(3,'2025-07-01', '2025-07-10', 3),
         AvailableRange(4,'2025-07-15', '2025-07-25', 4),
-        AvailableRange(5,'2025-08-01', '2025-08-10', 5)
+        AvailableRange(5,'2025-08-01', '2025-08-10', 5),
+        AvailableRange(6,'2025-09-01', '2025-12-31', 6)
         ]
 
 
@@ -39,5 +40,6 @@ def test_add_available_range(db_connection):
         AvailableRange(3,'2025-07-01', '2025-07-10', 3),
         AvailableRange(4,'2025-07-15', '2025-07-25', 4),
         AvailableRange(5,'2025-08-01', '2025-08-10', 5),
-        AvailableRange(6,f'{summer[0]}', f'{summer[1]}',5)
+        AvailableRange(6,'2025-09-01', '2025-12-31', 6),
+        AvailableRange(7,f'{summer[0]}', f'{summer[1]}',5)
         ]

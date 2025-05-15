@@ -60,8 +60,14 @@ INSERT INTO users (email_address, password, name) VALUES
 -- id: 6
 ('developer@example.com',
 '24326224313224736c3978776b566563534e4d69377057625771757865474a70386b3063413579634c666d5763706261514b7a444450504b50656343',
-'Developer');
+'Developer'),
 -- ev@fr£pa!ze^abcd_pw
+
+-- id: 7
+('rory@example.com',
+'24326224313224584a7a6a5a4b4b4b474e5232756236784a68474b534f514f384f3068437638767430347a7531436278636d715466367539304b6757',
+'Rory');
+-- 4gtdWRT435Dn!£
 ------------------------ spaces ------------------------
 
 -- Delete (drop) all our tables
@@ -86,7 +92,8 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
 ('Urban Loft', 'Sleek apartment in downtown.', 150, 2), -- Owned by Bob
 ('Beach Bungalow', 'Sunny spot by the sea.', 200, 3), -- Owned by Carol
 ('Mountain Retreat', 'Quiet escape in the hills.', 180, 4), -- Owned by Dave
-('Modern Studio', 'Compact yet luxurious.', 120, 5); -- Owned by Eve
+('Modern Studio', 'Compact yet luxurious.', 120, 5), -- Owned by Eve
+('Cool Castle', 'Spacious but drafty.', 99, 6); -- Owned by Rory
 
 ------------------------ available_ranges ------------------------
 
@@ -111,7 +118,8 @@ INSERT INTO available_ranges (start_range, end_range, space_id) VALUES
 ('2025-06-05', '2025-06-15', 2), -- 'Urban Loft'
 ('2025-07-01', '2025-07-10', 3), -- 'Beach Bungalow'
 ('2025-07-15', '2025-07-25', 4), -- 'Mountain Retreat'
-('2025-08-01', '2025-08-10', 5); -- 'Modern Studio'
+('2025-08-01', '2025-08-10', 5), -- 'Modern Studio'
+('2025-09-01', '2025-12-31', 6); -- 'Cool Castle'
 
 ------------------------ bookings ------------------------
 
@@ -141,10 +149,26 @@ INSERT INTO bookings (start_range, end_range, space_id, user_id, is_confirmed) V
 ('2025-07-02', '2025-07-04', 3, 4, FALSE), --  Beach Bungalow, requested by dave
 ('2025-07-16', '2025-07-20', 4, 5, FALSE), --  Mountain Retreat, requested by eve
 ('2025-08-02', '2025-08-06', 5, 1, FALSE), --  Modern Studio, requested by alice
-('2025-08-04', '2025-08-011', 5, 2, TRUE), --  Modern Studio, requested by bob
+('2025-08-04', '2025-08-11', 5, 2, TRUE), --  Modern Studio, requested by bob
 ('2025-06-17', '2025-06-22', 5, 2, TRUE),  --  Modern Studio, requested by bob
 ('2025-07-02', '2025-07-06', 5, 4, TRUE),  --  Modern Studio, requested by dave
-('2025-07-02', '2025-07-06', 5, 3, FALSE); --  Modern Studio, requested by carol
+('2025-07-02', '2025-07-06', 5, 3, FALSE), --  Modern Studio, requested by carol
+
+('2025-09-12', '2025-09-14', 6, 2, FALSE),   -- Cool Castle, requested by Bob
+('2025-09-05', '2025-09-13', 6, 5, FALSE), -- Cool Castle, requested by Eve
+('2025-09-23', '2025-09-26', 6, 3, FALSE),  -- Cool Castle, requested by Carol
+('2025-09-21', '2025-09-23', 6, 4, FALSE),   -- Cool Castle, requested by Dave
+('2025-10-03', '2025-10-09', 6, 1, TRUE),    -- Cool Castle, requested by Alice
+('2025-10-13', '2025-10-28', 6, 5, FALSE),   -- Cool Castle, requested by Eve
+('2025-11-17', '2025-11-26', 6, 2, FALSE),  -- Cool Castle, requested by Bob
+('2025-11-30', '2025-12-03', 6, 3, FALSE),   -- Cool Castle, requested by Carol
+('2025-12-08', '2025-12-12', 6, 3, FALSE),   -- Cool Castle, requested by Carol
+('2025-12-09', '2025-12-12', 6, 2, FALSE),   -- Cool Castle, requested by Bob
+('2025-12-12', '2025-12-18', 6, 5, FALSE),   -- Cool Castle, requested by Eve
+('2025-12-25', '2025-12-28', 6, 4, TRUE);    -- Cool Castle, requested by Dave
+
+
+
 
 
 

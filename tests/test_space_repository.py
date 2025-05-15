@@ -16,7 +16,8 @@ def test_get_all_spaces(db_connection):
         Space(2, 'Urban Loft', 'Sleek apartment in downtown.', 150, 2),
         Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
         Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
-        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5)
+        Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5),
+        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 6)
     ]
 
 """
@@ -40,5 +41,6 @@ def test_add_space(db_connection):
         Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
         Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
         Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5),
-        Space(6, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 1)
+        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 6),
+        Space(7, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 1)
     ]

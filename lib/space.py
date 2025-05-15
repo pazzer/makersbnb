@@ -24,5 +24,7 @@ class Space:
             return '⛰️'
         elif id_ == 5: # Modern Studio
             return '🍸'
+        elif id == 6: # Cool Castle
+            return '🏰'
         else:
             return ''
