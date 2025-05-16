@@ -116,6 +116,18 @@ def login():
                 flask_login.login_user(user)
                 return flask.redirect(flask.url_for('display_spaces'))
 
+@app.route('/logout')
+@flask_login.login_required
+def log_out():
+    flask_login.logout_user()
+    return redirect('/login')
+
+
+@app.route('/user_account')
+@flask_login.login_required
+def user_account():
+    return render_template('user_account.html')
+
 
 # ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
@@ -128,11 +140,7 @@ def log_in_developer():
     flask_login.login_user(user)
     return redirect(flask.url_for('display_spaces'))
 
-@app.route('/logout')
-@flask_login.login_required
-def log_out():
-    flask_login.logout_user()
-    return redirect('/login')
+
 
 
 # ------------------------ bookings routes ------------------------------------------------------

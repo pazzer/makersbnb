@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}MakersBnB | {{space.name}}{% endblock %}
+{% block title %}MakersBnB{% endblock %}
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<p>You are logged in as <span style="font-style:italic">{{current_user.name}}</span></p>
 
-</body>
-</html>
+{% endblock %}
