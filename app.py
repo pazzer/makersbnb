@@ -53,7 +53,7 @@ def get_index():
 def empty_route():
     return redirect('/register')
 
-# ------------------------------- Registration and login  ---------------------------------------------------
+# ------------------------------- Registration/login/account  ---------------------------------------------------
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -149,15 +149,6 @@ def log_out():
     return redirect('/login')
 
 
-
-
-
-@app.route('/user_account')
-@flask_login.login_required
-def user_account():
-    return render_template('user_account.html')
-
-
 # ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
 @flask_login.login_required
@@ -169,9 +160,14 @@ def log_in_developer():
     return redirect('/spaces')
 
 
+@app.route('/user_account')
+@flask_login.login_required
+def user_account():
+    return render_template('user_account.html')
 
 
 # ------------------------ bookings routes ------------------------------------------------------
+
 
 # GET /myspaces/bookings/<space_id>
 # Returns confirmed bookings for a space
