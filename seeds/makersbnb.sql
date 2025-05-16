@@ -99,7 +99,7 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
 ('Beach Bungalow', 'Sunny spot by the sea.', 200, 3), -- Owned by Carol
 ('Mountain Retreat', 'Quiet escape in the hills.', 180, 4), -- Owned by Dave
 ('Modern Studio', 'Compact yet luxurious.', 120, 5), -- Owned by Eve
-('Cool Castle', 'Spacious but drafty.', 99, 6); -- Owned by Rory
+('Cool Castle', 'Spacious but drafty.', 99, 7); -- Owned by Rory
 
 ------------------------ available_ranges ------------------------
 
@@ -120,12 +120,13 @@ CREATE TABLE available_ranges (
 
 -- Add any records that are needed for the tests to run
 INSERT INTO available_ranges (start_range, end_range, space_id) VALUES
-('2025-06-01', '2025-06-10', 1), -- 'Crazy Cabin,
-('2025-06-05', '2025-06-15', 2), -- 'Urban Loft'
-('2025-07-01', '2025-07-10', 3), -- 'Beach Bungalow'
-('2025-07-15', '2025-07-25', 4), -- 'Mountain Retreat'
-('2025-08-01', '2025-08-10', 5), -- 'Modern Studio'
-('2025-09-01', '2025-12-31', 6); -- 'Cool Castle'
+('2025-04-15', '2026-05-01', 1), -- 'Cozy Cabin,
+('2025-05-01', '2026-05-01', 2), -- 'Urban Loft'
+('2025-05-01', '2026-05-01', 3), -- 'Beach Bungalow'
+('2025-05-01', '2026-05-01', 4), -- 'Mountain Retreat'
+('2025-04-15', '2026-05-01', 5), -- 'Modern Studio'
+('2025-04-15', '2026-06-01', 6); -- 'Cool Castle'
+
 
 ------------------------ bookings ------------------------
 

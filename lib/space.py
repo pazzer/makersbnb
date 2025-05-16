@@ -8,23 +8,6 @@ class Space:
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
-    
+
     def __repr__(self):
         return f'Space({self.space_id}, {self.name}, {self.description}, {self.price_per_night}, {self.user_id})'
-
-    @staticmethod
-    def image_for_id(id_):
-        if id_ == 1: # Crazy Cabin
-            return '🛖'
-        elif id_ == 2: # Urban Loft
-            return '🪜'
-        elif id_ == 3: # Beach Bungalow
-            return '⛱️'
-        elif id_ == 4: # Mountain Retreat
-            return '⛰️'
-        elif id_ == 5: # Modern Studio
-            return '🍸'
-        elif id == 6: # Cool Castle
-            return '🏰'
-        else:
-            return ''

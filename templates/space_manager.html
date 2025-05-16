@@ -8,7 +8,7 @@
         <div id="manage_spaces_container">
             {% for space in spaces %}
                 <div class="manage_space">
-                    <h4>{{space.name}}</p>
+                    <h4>{{space.name}}</h4>
                     <div class="manage_buttons_div">
                         <button><a href='/myspaces/bookings/{{space.space_id}}'>Confirmed bookings</a></button>
                         <button><a href='/myspaces/requests/{{space.space_id}}'>Requests to book</a></button>
