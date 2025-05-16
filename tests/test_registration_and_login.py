@@ -116,7 +116,7 @@ def test_can_register_with_valid_email_and_password(db_connection, page, test_we
     fill('password_2', "password1234!", page)
     click('Create my Account', page)
 
-    h1 = locate('h1', page)
+    h1 = locate('h4', page)
     expect(h1).to_have_text('✅ Registration complete!')
 
     click('log in', page)

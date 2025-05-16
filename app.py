@@ -55,11 +55,20 @@ def empty_route():
 
 # ------------------------------- Registration and login  ---------------------------------------------------
 
+
+# @app.route('/register', methods=['GET'])
+# def handle_registration_request():
+#
+
+
 @app.route('/register', methods=['POST', 'GET'])
 def handle_registration_request():
 
     if request.method == 'POST':
         registration_values = RegistrationValues.from_post_request(request)
+    else:
+        return render_template('register.html',
+                               values_so_far=RegistrationValues.all_empty())
 
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
@@ -71,37 +80,7 @@ def handle_registration_request():
             errors=first_error,
             values_so_far=registration_values)
     else:
-        try:
-            user_repository.create_user(registration_values.email, registration_values.password_1)
-        except MakersBnbException as err:
-            return render_template(
-                "register.html",
-                errors= str(err),
-                values_so_far=registration_values)
-        else:
-
-            #email stuff
-            user_email = registration_values.email
-
-            #
-
-            mail = mt.Mail(
-            sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
-            to=[mt.Address(email="eveiaim98@outlook.com")],
-            subject="Thank you for registering!",
-            text=f"{user_email} has just been registered to makersbnb",
-            category="Integration Test",
-            )
-
-            client = mt.MailtrapClient(token = token())
-            response = client.send(mail)
-
-            print(response)
-            #
-
-
-
-            return render_template("registration_complete.html")
+        # return render_template("registration_complete.html")
         if registration_values.has_errors():
             first_error = registration_values.first_error()
             return render_template(
@@ -119,10 +98,33 @@ def handle_registration_request():
             else:
                 return redirect('/registration_complete')
                 # return render_template("registration_complete.html")
-    else:
-        return render_template('register.html',
-                               values_so_far=RegistrationValues.all_empty())
 
+
+
+    # try:
+    #     user_repository.create_user(registration_values.email, registration_values.password_1)
+    # except MakersBnbException as err:
+    #     return render_template(
+    #         "register.html",
+    #         errors= str(err),
+    #         values_so_far=registration_values)
+    # else:
+    #
+    #     #email stuff
+    #     user_email = registration_values.email
+    #
+    #     #
+    #
+    #     mail = mt.Mail(
+    #     sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+    #     to=[mt.Address(email="eveiaim98@outlook.com")],
+    #     subject="Thank you for registering!",
+    #     text=f"{user_email} has just been registered to makersbnb",
+    #     category="Integration Test",
+    #     )
+    #
+    #     client = mt.MailtrapClient(token = token())
+    #     response = client.send(mail)
 
 @app.route('/registration_complete')
 def registration_succeeded():
@@ -180,13 +182,14 @@ def user_account():
 # ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
 # Remove line below to allow dev login
-@flask_login.login_required
+# @flask_login.login_required
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
     user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw')
     flask_login.login_user(user)
-    return redirect(flask.url_for('display_spaces'))
+    return redirect('/spaces')
+    # return redirect(flask.url_for('display_spaces'))
 
 
 
@@ -305,7 +308,7 @@ def new_space_form():
     return render_template('myspaces_new.html')
 
 # POST / myspaces/new
-# CReates new space
+# Ceeates new space
 @app.route('/myspaces/new', methods=['POST'])
 @flask_login.login_required
 def create_space():
@@ -324,22 +327,9 @@ def create_space():
     return redirect(f'/myspaces/new')
 
 
-# GET / spaces
-# Shows user all spaces listed on our website as soon as they log in
-@app.route('/spaces', methods=['GET'])
-def get_all_spaces():
-    connection = get_flask_database_connection(app)
-    user = get_session_user(connection)
-    space_repository  = SpaceRepository(connection)
-    user_repository = UserRepository(connection)
-    spaces = space_repository.list_spaces()
-    owners = [user_repository.get_owner_of_space(space) for space in spaces]
-    return render_template('spaces_all.html', spaces_and_owners=zip(spaces, owners), logged_in=user.name)
 
-# GET spaces/filtered
-# Shows the user suitable spaces depending on their date range
 
-@app.route('/spaces', methods=['GET', 'POST'])
+@app.route('/spaces', methods=['POST', 'GET'])
 @flask_login.login_required
 def display_spaces():
     connection = get_flask_database_connection(app)
@@ -351,7 +341,7 @@ def display_spaces():
     space_repository = SpaceRepository(connection)
     spaces, owners = space_repository.spaces_and_owners_for_dates(*date_field_values.values())
 
-    return render_template('spaces.html',
+    return render_template('spaces_all.html',
                            spaces_and_owners=zip(spaces, owners),
                            date_range=date_field_values,
                            result_count=len(spaces))
