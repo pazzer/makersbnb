@@ -51,7 +51,6 @@ class SpaceRepository:
         return [Space(row["space_id"], row["name"], row["description"], row["price_per_night"], row["user_id"]) for row in rows]
 
 
-
     def spaces_and_owners_for_dates(self, lower_bound, upper_bound):
         spaces = self.list_spaces_by_date_range(lower_bound, upper_bound)
         user_repository = UserRepository(self._connection)

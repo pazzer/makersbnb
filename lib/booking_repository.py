@@ -1,4 +1,5 @@
 from lib.booking import Booking
+from lib.custom_exceptions import UnrecognisedIdError
 
 class BookingRepository:
     def __init__(self, connection):
@@ -12,6 +13,15 @@ class BookingRepository:
             item = Booking(row['booking_id'], row['start_range'], row['end_range'], row['space_id'], row['user_id'], row['is_confirmed'])
             spaces.append(item)
         return spaces
+
+    def find_by_id(self, id_):
+        """Returns the `User` associated with `id_`. If no match is found an AssertionError
+        is thrown."""
+        rows = self.connection.execute("SELECT * FROM bookings WHERE booking_id = %s", [id_])
+        if len(rows) != 1:
+            raise UnrecognisedIdError(f"id '{id_}' not recognized.")
+        else:
+            return Booking.from_rowdict(rows[0])
 
 
     def view_requests(self, space_id):
@@ -41,8 +51,7 @@ class BookingRepository:
         rows = self.connection.execute('UPDATE bookings SET is_confirmed = TRUE WHERE booking_id = %s', [booking_id])
 
     def has_confirmed_booking(self, space_id, start_date, end_date):
-        'Returns True if the provided space has a booking that overlaps the provided range'
-
+        '''Returns True if the provided space already has a confirmed booking that overlaps the provided range'''
         confirmed_bookings = self.connection.execute('SELECT booking_id FROM bookings'
                                                      ' WHERE space_id = %s '
                                                      'AND '
@@ -52,3 +61,6 @@ class BookingRepository:
                                                      'AND'
                                                      ' is_confirmed IS TRUE', [space_id, start_date, end_date] )
         return len(confirmed_bookings) > 0
+
+
+

@@ -16,7 +16,7 @@ def to_date(stringdate):
 
 
 def date_to_str(date_):
-    return date_.strftime('%Y/%m/%d')
+    return date_.strftime('%Y-%m-%d')
 
 
 def format_date_range(start, end):

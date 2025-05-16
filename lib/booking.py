@@ -15,3 +15,16 @@ class Booking:
     def __repr__(self):
         return f"Booking({self.booking_id}, {self.start_range}, {self.end_range}, {self.space_id}, {self.user_id}, {self.is_confirmed})"
 
+    @staticmethod
+    def from_rowdict(rowdict):
+        return Booking(rowdict['booking_id'],
+                rowdict['start_range'],
+                rowdict['end_range'],
+                rowdict['space_id'],
+                rowdict['user_id'],
+                rowdict['is_confirmed'])
+
+
+    def __str__(self):
+        return "stuff here"
+

@@ -1,8 +1,10 @@
 import os
+from mimetypes import guess_type
 
 import flask
 from flask import Flask, request, render_template, redirect, flash
 from flask_login import login_required, current_user
+from urllib3.util.util import to_str
 
 from lib.BookingRequestFormValues import BookingRequestFormValues
 from lib.database_connection import get_flask_database_connection
@@ -17,14 +19,14 @@ from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 from lib.space_repository import SpaceRepository
 from lib.space import Space
-from lib.util import to_date, format_date_range
+from lib.util import to_date, format_date_range, date_to_str
 
 import flask_login
 
 login_manager = flask_login.LoginManager()
 login_manager.login_view = 'login'
 app = Flask(__name__)
-app.config['TESTING'] = True
+app.config['TESTING'] = False
 app.secret_key = os.urandom(24)
 login_manager.init_app(app)
 
@@ -123,6 +125,9 @@ def log_out():
     return redirect('/login')
 
 
+
+
+
 @app.route('/user_account')
 @flask_login.login_required
 def user_account():
@@ -132,7 +137,7 @@ def user_account():
 # ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
 # Remove line below to allow dev login
-# @flask_login.login_required
+@flask_login.login_required
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
@@ -274,10 +279,29 @@ def submit_booking_request():
             is_confirmed=False)
 
     _ = repository.create_request(booking)
-    # TODO: return something here!
+    return redirect(f'/booking_request_summary/{booking.booking_id}')
 
 
+@app.route('/booking_request_summary/<int:booking_id>')
+@flask_login.login_required
+def booking_request_summary(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking = booking_repository.find_by_id(booking_id)
 
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(booking.space_id)
+    user_repository = UserRepository(connection)
+    host = user_repository.find_by_id(space.user_id)
+
+
+    return render_template(
+        'booking_request_summary.html',
+        space=space,
+        host=host,
+        booking=booking,
+        formatted_dates = format_date_range(booking.start_range, booking.end_range)
+    )
 
 # ------------------------------ manage spaces page ---------------------------------------------
 @app.route('/myspaces/manage', methods=['GET'])
