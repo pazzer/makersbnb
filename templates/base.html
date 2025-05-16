@@ -24,6 +24,25 @@
             </header>
 
 
+        <header>
+            <h1>MakersBnB</h1>
+            <div id="header_links">
+                {% if current_user.is_authenticated %}
+                <a href="/myspaces/new">New Space</a>
+                <p>|</p>
+                <a href="/spaces">View Spaces</a>
+                <p>|</p>
+                <a href="/myspaces/manage">Manage Spaces</a>
+                <p>|</p>
+                <a class="t-user-name" href="/user_account">{{ current_user.name }}</a>
+                <p>|</p>
+                <a href="/logout">Log Out</a>
+                {% endif %}
+
+            </div>
+        </header>
+
+
             <main>
                 {% block content %}
                 <!-- Our page specific content goes here, e.g. view spaces, view booking requests -->

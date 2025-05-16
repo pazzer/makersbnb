@@ -5,14 +5,19 @@
 {% block content %}
     <h2>Explore our spaces</h2>
     <div id="spaces_search_bar_div">
-        <form action="/spaces/filtered" method="POST" id="spaces_search_bar">
+        <form action="/spaces" method="POST" id="spaces_search_bar">
             <label for="start_date">Check in:</label>
-            <input type="date" name="start_date" id="start_date">
+            <input type="date" name="start_date" value="{{date_range.start_date}}" id="start_date">
+
             <label for="end_date">Check out:</label>
-            <input type="date" name="end_date" id="end_date">
+            <input type="date" name="end_date" value="{{date_range.end_date}}" id="end_date">
             <input type="submit" value="&#128269;">
     </form>
     </div>
+    {% if result_count == 0 %}
+    <p style="text-align: center; font-size:96px; margin:64px 0 0 0">😢</p>
+    <p style="text-align: center; font-size:14px; margin:0 0 0 0">Sorry, looks like you're not going on holiday.</p>
+    {% else %}
     <div id="spaces_div">
         {% for (space, owner) in spaces_and_owners %}
             <div class="space">
@@ -22,11 +27,15 @@
                 </h4>
                 <p>{{space.description}}</p>
                 <p class="price">£{{space.price_per_night}} per night</p>
-                <!-- <p>Hosted by {{space.user_id}}</p> -->
+                 <p>Hosted by {{owner.name}}</p>
                 <div class="buttons_div">
-                    <button><a href='/spaces/{{space.space_id}}'>More info & book</a></button>
+
+
+                    <button><a href='/spaces/{{space.space_id}}/{{date_range.start_date}}+{{date_range.end_date}}'>Book</a></button>
+
                 </div>
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}

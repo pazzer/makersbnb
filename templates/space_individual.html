@@ -4,6 +4,7 @@
 
 
 {% block content %}
+
 <div id="individual_space_container">
     <div class="individual_space">
         <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" />
@@ -14,15 +15,21 @@
         <p>{{ space.description }}</p>
         <p>£{{ space.price_per_night }} per night</p>
         <p>Hosted by {{ owner.name }}</p>
-
-        <!-- <p>Available date ranges:</p>
-        <ul>
-            {% for range in available_ranges %}
-            <li>{{ range.start_range }} to {{ range.end_range }}</li>
-            {% endfor %}
-        </ul> -->
+    <p>Available date ranges:</p>
+    <ul>
+        <li>First date range</li>
+        <li>Second date range</li>
+        <li>etc</li>
+    </ul>
+    <form action="/spaces/book" method="post" id="make_booking_request">
+        <input type="hidden" name="start_date" value={{start_date}}>
+        <input type="hidden" name="end_date" value={{end_date}}>
+        <input type="hidden" name="customer_id" value={{current_user.user_id}}>
+        <input type="hidden" name="space_id" value={{space.space_id}}>
         <button><a href="/spaces/<int:space_id>/book">Book</a></button>
+    </form>
         <button><a href="/spaces">Go back</a></button>
     </div>
 </div>
+
 {% endblock %}

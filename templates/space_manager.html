@@ -8,7 +8,9 @@
         {% if spaces|length > 0 %}
             {% for space in spaces %}
                 <div class="manage_space">
+
                     <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" />
+
                     <h4>{{space.name}}</h4>
                     <div class="manage_buttons_div">
                         <button><a href='/myspaces/bookings/{{space.space_id}}'>Confirmed bookings</a></button>

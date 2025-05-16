@@ -22,9 +22,7 @@ class AvailableRange:
     def from_rowdict(rowdict):
         return AvailableRange(rowdict["availability_id"], rowdict["start_range"], rowdict["end_range"], rowdict["space_id"])
 
-    
-    
-    
+
     def contains(self, start_date, end_date):
         assert start_date < end_date, 'bad date, start cannot be bigger than end date'
 

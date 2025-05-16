@@ -3,13 +3,15 @@ from operator import truediv
 
 from lib.user import User
 import bcrypt
+
+
 from .custom_exceptions import EmailAlreadyExistsError, MalformedPasswordError, MalformedEmailError, UnrecognisedIdError
 
 
 class UserRepository:
 
-    def __init__(self, connection):
-        self._connection = connection
+    def __init__(self, _connection):
+        self._connection = _connection
 
 
     def find_by_email_and_password(self, email, plain_text_candidate):
@@ -118,3 +120,14 @@ class UserRepository:
         rows = self._connection.execute('SELECT * FROM users WHERE user_id = %s', [space.user_id])
         assert len(rows) == 1, f"{space.name} doesn't appear to have an owner!"
         return User.from_rowdict(rows[0])
+
+
+
+
+
+
+
+
+
+
+
