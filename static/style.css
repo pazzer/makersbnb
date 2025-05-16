@@ -7,8 +7,20 @@
     margin-right: 0;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.page_wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 main {
     padding: 5px;
+    flex: 1;
 }
 
 /* ------------------- Header styling --------------------*/

@@ -9,31 +9,31 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     </head>
     <body>
+        <div class="page_wrapper">
+            <header>
+                <h1><a href="/spaces">MakersBnB</a></h1>
+                <div id="header_links">
+                    <a href="/spaces">View Spaces</a>
+                    <p>|</p>
+                    <a href="/myspaces/manage">Manage Spaces</a>
+                    {% if no_active_session != True %}
+                    <p>|</p>
+                    <a class="t-user-name" href="/login">{{ logged_in }}</a>
+                    {% endif %}
+                </div>
+            </header>
 
-        <header>
-            <h1><a href="/spaces">MakersBnB</a></h1>
-            <div id="header_links">
-                <a href="/spaces">View Spaces</a>
-                <p>|</p>
-                <a href="/myspaces/manage">Manage Spaces</a>
-                {% if no_active_session != True %}
-                <p>|</p>
-                <a class="t-user-name" href="/login">{{ logged_in }}</a>
-                {% endif %}
-            </div>
-        </header>
 
+            <main>
+                {% block content %}
+                <!-- Our page specific content goes here, e.g. view spaces, view booking requests -->
+                {% endblock %}
+            </main>
 
-        <main>
-            {% block content %}
-            <!-- Our page specific content goes here, e.g. view spaces, view booking requests -->
-            {% endblock %}
-        </main>
-
-        <footer>
-            <p>&copy; 2025 MakersBnB, Inc.</p>
-            <p>Created by Zehad, Paul, Fran and Eve</p>
-        </footer>
-
+            <footer>
+                <p>&copy; 2025 MakersBnB, Inc.</p>
+                <p>Created by Zehad, Paul, Fran and Eve</p>
+            </footer>
+        </div>
     </body>
 </html>
