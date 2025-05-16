@@ -191,12 +191,9 @@ def get_bookings(space_id):
     space = space_repository.find(space_id)
     
     user_repository = UserRepository(connection)
-    for booking in bookings:
-        user_id = booking.user_id
-        guest = user_repository.find_by_id(user_id)
-        guest_name = guest.name
+    
 
-    return render_template('myspaces_bookings.html', bookings=bookings, guest_name=guest_name, space=space)
+    return render_template('myspaces_bookings.html', bookings=bookings, space=space)
 
 # GET /myspaces/requests/<space_id>
 # Returns requests to book for a space

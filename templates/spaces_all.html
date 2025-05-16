@@ -21,13 +21,13 @@
     <div id="spaces_div">
         {% for (space, owner) in spaces_and_owners %}
             <div class="space">
-                <a href='/spaces/{{space.space_id}}'><img src="{{ url_for('static', filename=space.img_filename) }}" alt="{{ space.name }}"></a>
+                <a href='/spaces/{{space.space_id}}/{{date_range.start_date}}+{{date_range.end_date}}'><img src="{{ url_for('static', filename=space.img_filename) }}" alt="{{ space.name }}"></a>
                 <h4>
-                    <a href='/spaces/{{space.space_id}}'>{{space.name}}</a>
+                    <a href='/spaces/{{space.space_id}}/{{date_range.start_date}}+{{date_range.end_date}}'>{{space.name}}</a>
                 </h4>
                 <p>{{space.description}}</p>
                 <p class="price">£{{space.price_per_night}} per night</p>
-                 <p>Hosted by {{owner.name}}</p>
+                <p>Hosted by {{owner.name}}</p>
                 <div class="buttons_div">
 
 

@@ -11,37 +11,21 @@
     <body>
         <div class="page_wrapper">
             <header>
-                <h1><a href="/spaces">MakersBnB</a></h1>
+                <h1>MakersBnB</h1>
                 <div id="header_links">
+                    {% if current_user.is_authenticated %}
+                    <a href="/myspaces/new">New Space</a>
+                    <p>|</p>
                     <a href="/spaces">View Spaces</a>
                     <p>|</p>
                     <a href="/myspaces/manage">Manage Spaces</a>
-                    {% if no_active_session != True %}
                     <p>|</p>
-                    <a class="t-user-name" href="/login">{{ logged_in }}</a>
+                    <a class="t-user-name" href="/user_account">{{ current_user.name }}</a>
+                    <p>|</p>
+                    <a href="/logout">Log Out</a>
                     {% endif %}
                 </div>
             </header>
-
-
-        <header>
-            <h1>MakersBnB</h1>
-            <div id="header_links">
-                {% if current_user.is_authenticated %}
-                <a href="/myspaces/new">New Space</a>
-                <p>|</p>
-                <a href="/spaces">View Spaces</a>
-                <p>|</p>
-                <a href="/myspaces/manage">Manage Spaces</a>
-                <p>|</p>
-                <a class="t-user-name" href="/user_account">{{ current_user.name }}</a>
-                <p>|</p>
-                <a href="/logout">Log Out</a>
-                {% endif %}
-
-            </div>
-        </header>
-
 
             <main>
                 {% block content %}
