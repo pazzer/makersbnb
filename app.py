@@ -274,11 +274,11 @@ def create_space():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
 
-    name = request.form['name']
-    short_description = request.form['short_description']
-    long_description = request.form['long_description']
-    area = request.form['area']
-    country = request.form['country']
+    name = request.form['name'].strip().title()
+    short_description = request.form['short_description'].strip().capitalize()
+    long_description = request.form['long_description'].strip().capitalize()
+    area = request.form['area'].strip().title()
+    country = request.form['country'].strip().title()
     price_per_night = request.form['price_per_night']
     user_id = session.get('user_id', None)
 

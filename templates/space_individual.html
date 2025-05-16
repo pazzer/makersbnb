@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}MakersBnB | {{space.name}}{% endblock %}
+{% block title %}{{space.name}} | MakersBnB{% endblock %}
 
 {% block content %}
+    {% set area_plus = space.area|replace(' ', '+') %}
+    {% set country_plus = space.country|replace(' ', '+') %}
     <h4>{{space.name}}</h4>
     <p>{{space.short_description}}</p>
-    <p>{{space.longer_description}}</p>
+    <p>{{space.long_description}}</p>
+    <p>&#x1F4CD; {{space.area}}, {{space.country}}</p>
+    <iframe
+        width="100%"
+        height="300"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps?q={{area_plus}},+{{country_plus}}&output=embed">
+</iframe>
     <p>£{{space.price_per_night}} per night</p>
     <p>Hosted by {{owner.name}}</p>
     <p>Available date ranges:</p>
