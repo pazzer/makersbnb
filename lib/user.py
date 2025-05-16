@@ -22,14 +22,9 @@ class User(flask_login.UserMixin):
     def from_rowdict(rowdict):
         return User(rowdict['user_id'], rowdict['email_address'], rowdict['password'], rowdict['name'])
 
+
     def get_id(self):
-        return self.user_id
-
-    def is_authenticated(self):
-        return True
-
-
-
+        return str(self.user_id)
 
 
 

@@ -24,9 +24,12 @@ class SpaceRepository:
         available_spaces = []
         for space in self.list_spaces():
             rows = self._connection.execute("SELECT * FROM available_ranges WHERE space_id = %s ", [space.space_id])
-            available_range = AvailableRange.from_rowdict(rows[0])
-            if available_range.contains(holiday_start, holiday_end):
+            if len(rows) == 0:
                 available_spaces.append(space)
+            else:
+                available_range = AvailableRange.from_rowdict(rows[0])
+                if available_range.contains(holiday_start, holiday_end):
+                    available_spaces.append(space)
         return available_spaces
 
 
@@ -53,5 +56,5 @@ class SpaceRepository:
         spaces = self.list_spaces_by_date_range(lower_bound, upper_bound)
         user_repository = UserRepository(self._connection)
         owners = [user_repository.find_by_id(space.user_id) for space in spaces]
-        return zip(spaces, owners)
+        return spaces, owners
 
