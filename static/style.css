@@ -359,7 +359,7 @@ h2 {
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
     row-gap: 20px;
-    padding: 30px 20px 20px 30px;
+    padding: 0 20px 20px 30px;
     justify-content: center;
 }
 
@@ -409,17 +409,37 @@ h2 {
     border-radius: 20px;
 }
 
+.manage_space_new_button {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.manage_space_new_button button {
+    align-self: center;
+    max-width: fit-content;
+}
+
+.manage_space_new_button a {
+    color: white;
+    text-decoration: none;
+}
+
 #manage_space_new_container {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
+    width: 300%;
 }
 
 .manage_space_new {
     background-color: hsla(0, 5%, 98%, 1);
-    padding: 10px;
+    padding: 50px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
