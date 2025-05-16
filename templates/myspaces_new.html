@@ -8,10 +8,13 @@
             {% for message in messages %}
                 <h2 class="flash-messages">{{ message }}</h2>
             {% endfor %}
+            <a href="/myspaces/manage">&larr;</a>
             <div class="centered-link">
             <a href="/myspaces/new" class="styled-button">List another space</a>
             </div>
         {% else %}
+        <a class="back_link" href="/myspaces/manage">&larr;</a>
+        <div class="new_space_container">
             <h2>Tell us about your space:</h2>
             <div id="new_space_form_container">
                 <form action="/myspaces/new" method="POST" enctype="multipart/form-data" id="new_space_form">

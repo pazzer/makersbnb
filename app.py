@@ -169,7 +169,17 @@ def get_bookings(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
     bookings = repository.view_bookings(space_id)
-    return render_template('myspaces_bookings.html', bookings=bookings)
+
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
+    
+    user_repository = UserRepository(connection)
+    for booking in bookings:
+        user_id = booking.user_id
+        guest = user_repository.find_by_id(user_id)
+        guest_name = guest.name
+
+    return render_template('myspaces_bookings.html', bookings=bookings, guest_name=guest_name, space=space)
 
 # GET /myspaces/requests/<space_id>
 # Returns requests to book for a space

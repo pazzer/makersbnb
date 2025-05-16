@@ -3,20 +3,37 @@
 {% block title %}Your spaces | MakersBnB{% endblock %}
 
 {% block content %}
+    <a href="/myspaces/manage">&larr;</a>
     <h2>Your confirmed bookings</h2>
     <div id="spaces_div"></div>
         {% if bookings|length < 1%}
-            <p>You have no confirmed bookings for this space</p>
+            <p>You have no confirmed bookings for {{space.name}}.</p>
         {% else %}
-            <p>Your confirmed bookings for {{bookings[0].space_id}}</p>
-            {% for booking in bookings %}
-                <div>
-                    <p>Guest: {{booking.user_id}}</p>
-                    <p>Check in: {{booking.start_range}}</p>
-                    <p>Check out: {{booking.end_range}}</p>
-                    <p>Number of nights: {{(booking.end_range - booking.start_range).days}}</p>
+            <p id="booking_p">These are the bookings you have confirmed for {{space.name}}:</p>
+            <div id="bookings_inds_container">
+                {% for booking in bookings %}
+                {% set nights = (booking.end_range - booking.start_range).days %}
+                    {% set price_per_night = space.price_per_night %}
+                    {% set total_price = nights * price_per_night %}
+                    {% set service_charge = total_price * 0.03 %}
+                    {% set final_price = total_price * 0.97 %}
+
+                <div class="booking">
+                    <div class="booking_info">
+                        <p><b>Guest's name:</b> {{guest_name}}</p>
+                        <p><b>Check in:</b> {{booking.start_range}}</p>
+                        <p><b>Check out:</b> {{booking.end_range}}</p>
+                        <p><b>Number of nights:</b> {{nights}}</p>
+                    </div>
+                    <hr>
+                    <div class="payment_div">
+                        <p class="payment_equation">{{nights}} x £{{"%.2f"|format(price_per_night)}} = £{{"%.2f"|format(total_price)}}</p>
+                        <p class="payment_equation">MakersBnB's 3% service charge = -£{{"%.2f"|format(service_charge)}}</p>
+                        <p class="total_price">Your payment: £{{"%.2f"|format(final_price)}}</p>
+                    </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         {% endif %}
         <a href="/myspaces/manage">Go back</a>
     </div>
