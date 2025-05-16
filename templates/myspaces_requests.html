@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
+{% extends "base.html" %}
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <h1>Requests to book your space</h1>
-        {% if requests|length < 1%}
+{% block title %}Your spaces | MakersBnB{% endblock %}
+
+{% block content %}
+    <h2>Requests to book your space</h2>
+    {% if requests|length < 1 %}
+        <div id="spaces_div">
             <p>You have no requests to book this space</p>
-        {% else %}
-            <p>Your requests to book {{space.name}}</p>
+        </div>
+    {% else %}
+        <div id="spaces_div">
+            <p>Your requests to book {{space.name}}:</p>
             {% for request in requests %}
-                <div>
+                <div class="space">
                     <p>Guest: {{request.user_id}}</p>
                     <p>Check in: {{request.start_range}}</p>
                     <p>Check out: {{request.end_range}}</p>
@@ -29,9 +25,9 @@
                     </form>
                 </div>
             {% endfor %}
-        {% endif %}
-        <a href="/myspaces/manage">Go back</a>
-    </body>
-</html>
+        </div>
+    {% endif %}
+    <a href="/myspaces/manage">Go back</a>
+{% endblock %}
 
 <!-- An issue, page is loading for <space_id>s which don't exist in the database -->

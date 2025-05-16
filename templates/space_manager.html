@@ -17,9 +17,13 @@
                 </div>
             {% endfor %}
     </div>
-        <a href="/myspaces/new">Click here to list another space</a>
+    <div class="manage_space">
+        <button><a href="/myspaces/new">Click here to list another space</a></button>
+    </div>
         {% else %}
-            <h2>List a space with MakersBnB!</h2>
-                <a href="/myspaces/new">Click here to list a space</a>
-        {% endif %}
+            <div class="manage_space">
+                <h2>List a space with MakersBnB!</h2>
+                <button><a href="/myspaces/new">Click here to list a space</a></button>
+            </div>
+                {% endif %}
 {% endblock %}
