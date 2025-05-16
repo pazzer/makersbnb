@@ -275,11 +275,14 @@ def create_space():
     repository = SpaceRepository(connection)
 
     name = request.form['name']
-    description = request.form['description']
+    short_description = request.form['short_description']
+    long_description = request.form['long_description']
+    area = request.form['area']
+    country = request.form['country']
     price_per_night = request.form['price_per_night']
     user_id = session.get('user_id', None)
 
-    space = Space(None, name, description, price_per_night, user_id)
+    space = Space(None, name, short_description, long_description, area, country, price_per_night, user_id)
     repository.add_space(space)
 
     flash('Your space has been added to MakersBnB!')

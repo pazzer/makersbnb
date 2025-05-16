@@ -85,7 +85,10 @@ CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
     space_id SERIAL PRIMARY KEY,
     name VARCHAR(255),
-    description VARCHAR(255),
+    short_description VARCHAR(255),
+    long_description VARCHAR(255),
+    area VARCHAR(255),
+    country VARCHAR(255),
     price_per_night INT,
     user_id INT,
         CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id)
@@ -93,13 +96,13 @@ CREATE TABLE spaces (
 );
 
 -- Add any records that are needed for the tests to run
-INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
-('Cozy Cabin', 'Rustic cabin in the forest.', 100, 1), -- Owned by Alice
-('Urban Loft', 'Sleek apartment in downtown.', 150, 2), -- Owned by Bob
-('Beach Bungalow', 'Sunny spot by the sea.', 200, 3), -- Owned by Carol
-('Mountain Retreat', 'Quiet escape in the hills.', 180, 4), -- Owned by Dave
-('Modern Studio', 'Compact yet luxurious.', 120, 5), -- Owned by Eve
-('Cool Castle', 'Spacious but drafty.', 99, 6); -- Owned by Rory
+INSERT INTO spaces (name, short_description, long_description, area, country, price_per_night, user_id) VALUES
+('Cosy Cabin', 'Rustic cabin in the forest.', 'Tucked away in the serene woodlands of Ambleside, this rustic forest cabin offers a peaceful retreat in the heart of the Lake District. Featuring a wood-burning stove, exposed beams, and cozy furnishings, it''s perfect for couples or solo travelers.', 'Ambleside', 'United Kingdom', 100, 1), -- Owned by Alice
+('Urban Loft', 'Sleek apartment in downtown.', 'Located in the vibrant core of New York City, this modern loft boasts industrial design, high ceilings, and panoramic city views. With top restaurants, shops, and nightlife just steps away, it''s the perfect base for an urban adventure or business stay.', 'New York', 'United States', 150, 2), -- Owned by Bob
+('Beach Bungalow', 'Sunny spot by the sea.', 'This charming seaside bungalow in Byron Bay offers direct beach access, ocean views, and a laid-back atmosphere. With surf spots, cafes, and coastal trails nearby, it''s ideal for a sun-soaked getaway or a peaceful retreat by the waves.', 'Byron Bay', 'Australia', 200, 3), -- Owned by Carol
+('Mountain Retreat', 'Quiet escape in the hills.', 'Nestled in the tranquil Swiss Alps, this cozy mountain lodge in Zermatt offers stunning views, fresh alpine air, and endless hiking or skiing adventures. Perfect for a romantic escape or nature lover''s dream getaway in any season.', 'Zermatt', 'Switzerland', 180, 4), -- Owned by Dave
+('Modern Studio', 'Compact yet luxurious.', 'Situated in the heart of Tokyo''s vibrant Shibuya district, this sleek studio combines comfort with convenience. Smart design, high-end finishes, and proximity to dining, shopping, and transport make it ideal for solo travelers or digital nomads.', 'Tokyo', 'Japan', 120, 5), -- Owned by Eve
+('Cool Castle', 'Spacious but drafty.', 'Step back in time with this quirky medieval castle in Carcassonne, France. With stone walls, towering turrets, and a moody charm, it''s perfect for history buffs or unique stays. Expect character, creaks, and unforgettable atmosphere.', 'Carcassonne', 'France', 99, 6); -- Owned by Rory
 
 ------------------------ available_ranges ------------------------
 

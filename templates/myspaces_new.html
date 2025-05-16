@@ -13,13 +13,22 @@
             <h2>Tell us about your space:</h2>
             <form action="/myspaces/new" method="POST">
                 <label for="name">Choose a name for your space:</label>
-                <input type="text" name="name" id="name" value="Fran's Cosy Cabin...">
+                <input type="text" name="name" id="name" placeholder="Fran's Cosy Cabin...">
                 <br>
-                <label for="description">Write a description:</label>
-                <input type="text" name="description" id="description" value="A small, cosy cabin in the middle of the woods...">
+                <label for="short_description">Write a brief description:</label>
+                <input type="text" name="short_description" id="short_description" maxlength="30" placeholder="A small, cosy cabin in the middle of the woods... (max 30 characters)">
+                <br>
+                <label for="long_description">What makes your space special?:</label>
+                <input type="text" name="long_description" id="long_description" maxlength="500" placeholder="Surrounded by the serene woodlands of Ambleside, this quaint Lake District cabin... (max 500 characters)">
+                <br>
+                <label for="area">Where is your space located?:</label>
+                <input type="text" name="area" id="area" placeholder="Ambleside">
+                <br>
+                <label for="country">What country is your space in?:</label>
+                <input type="text" name="country" id="country" placeholder="United Kingdom">
                 <br>
                 <label for="price_per_night">Price to stay per night: £</label>
-                <input type="number" name="price_per_night" id="price_per_night" value="120" min="5">
+                <input type="number" name="price_per_night" id="price_per_night" placeholder="120" min="5">
                 <br>
                 <input type="submit">
             </form>
