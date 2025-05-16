@@ -5,14 +5,15 @@
 {% block title %}Requests to book your space | MakersBnB{% endblock %}
 
 {% block content %}
-<a href="/myspaces/manage">&larr;</a>
-<div class="requests_container">
-    <h2>Requests to book your space</h1>
-        {% if requests|length < 1%}
+    <div id="requests_container">
+        <a href="/myspaces/manage">&larr;</a>
+        <h2>Requests to book your space</h2>
+
+        {% if requests|length < 1 %}
             <p>You have no requests to book *this space*</p>
         {% else %}
-            <p id="request_p">Your requests to book {{space.name}}</p>
-            <div class="requests_inds_container">
+            <p id="request_p">Your requests to book {{ space.name }}</p>
+            <div id="requests_inds_container">
                 {% for request in requests %}
                     {% set nights = (request.end_range - request.start_range).days %}
                     {% set price_per_night = space.price_per_night %}
@@ -22,30 +23,29 @@
 
                     <div class="request">
                         <div class="request_info">
-                            <p><b>Guest's name:</b> {{request.user_id}}</p>
-                            <p><b>Check in:</b> {{request.start_range}}</p>
-                            <p><b>Check out:</b> {{request.end_range}}</p>
-                            <p><b>Number of nights:</b> {{nights}}</p>
+                            <p><b>Guest's name:</b> {{ request.user_id }}</p>
+                            <p><b>Check in:</b> {{ request.start_range }}</p>
+                            <p><b>Check out:</b> {{ request.end_range }}</p>
+                            <p><b>Number of nights:</b> {{ nights }}</p>
                         </div>
                         <hr>
                         <div class="payment_div">
-                            <p class="payment_equation">{{nights}} x £{{"%.2f"|format(price_per_night)}} = £{{"%.2f"|format(total_price)}}</p>
-                            <p class="payment_equation">MakersBnB's 3% service charge: -£{{"%.2f"|format(service_charge)}}</p>
-                            <p class="total_price">Potential payment: £{{"%.2f"|format(final_price)}}</p>
+                            <p class="payment_equation">{{ nights }} x £{{ "%.2f"|format(price_per_night) }} = £{{ "%.2f"|format(total_price) }}</p>
+                            <p class="payment_equation">MakersBnB's 3% service charge: -£{{ "%.2f"|format(service_charge) }}</p>
+                            <p class="total_price">Potential payment: £{{ "%.2f"|format(final_price) }}</p>
                         </div>
                         <hr>
                         <div class="request_buttons">
-                            <form action="/myspaces/requests/{{request.space_id}}/{{request.booking_id}}/reject" method="POST">
+                            <form action="/myspaces/requests/{{ request.space_id }}/{{ request.booking_id }}/reject" method="POST">
                                 <button type="submit">Reject</button>
                             </form>
-                            <form action="/myspaces/requests/{{request.space_id}}/{{request.booking_id}}/accept" method="POST">
+                            <form action="/myspaces/requests/{{ request.space_id }}/{{ request.booking_id }}/accept" method="POST">
                                 <button type="submit">Accept</button>
                             </form>
                         </div>
                     </div>
                 {% endfor %}
-                </div>
             </div>
         {% endif %}
-</div>
+    </div>
 {% endblock %}
