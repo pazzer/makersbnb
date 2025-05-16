@@ -181,15 +181,13 @@ def user_account():
 
 # ⚠️ ⚠️ ⚠️ ⚠️ Must NOT ship ⚠️ ⚠️ ⚠️ ⚠️ #
 @app.route('/dev_login')
-# Remove line below to allow dev login
-# @flask_login.login_required
+@flask_login.login_required
 def log_in_developer():
     db_conn = get_flask_database_connection(app)
     user_repository = UserRepository(db_conn)
     user = user_repository.find_by_email_and_password('developer@example.com', 'ev@fr£pa!ze^abcd_pw')
     flask_login.login_user(user)
     return redirect('/spaces')
-    # return redirect(flask.url_for('display_spaces'))
 
 
 
