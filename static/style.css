@@ -491,6 +491,12 @@ h2 {
     padding: 0 60px;
 }
 
+#bookings_container h3 {
+    color: black;
+    font-size: 1.5rem;
+    padding: 0 250px;
+}
+
 #bookings_container a {
     color: hsla(358, 100%, 67%, 1);
     text-decoration: none;
@@ -505,8 +511,9 @@ h2 {
 #bookings_inds_container {
     display: grid;
     grid-template-columns: auto auto auto;
-    column-gap: 20px;
-    row-gap: 20px;
+    column-gap: 40px;
+    row-gap: 40px;
+    justify-content: center;
 }
 
 .booking {
@@ -541,17 +548,24 @@ h2 {
 
 
 /* ------------------------- myspaces/requests styling --------------------------- */
+
 #requests_container {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    padding: 20px 30px;
+    padding: 20px;
 }
 
 #requests_container h2 {
     color: black;
     font-size: 2rem;
     padding: 0 40px;
+}
+
+#requests_container h3 {
+    color: black;
+    font-size: 1.5rem;
+    padding: 0 200px;
 }
 
 #requests_container p {
@@ -572,8 +586,9 @@ h2 {
 #requests_inds_container {
     display: grid;
     grid-template-columns: auto auto auto;
-    column-gap: 20px;
-    row-gap: 20px;
+    column-gap: 40px;
+    row-gap: 40px;
+    justify-content: center;
 }
 
 .request {

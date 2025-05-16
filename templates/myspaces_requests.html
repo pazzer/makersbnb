@@ -5,14 +5,15 @@
 {% block title %}Requests to book your space | MakersBnB{% endblock %}
 
 {% block content %}
+    <a class="back_link" href="/myspaces/manage">&larr;</a>
     <div id="requests_container">
-        <a href="/myspaces/manage">&larr;</a>
+        
         <h2>Requests to book your space</h2>
 
         {% if requests|length < 1 %}
             <p>You have no requests to book *this space*</p>
         {% else %}
-            <p id="request_p">Your requests to book {{ space.name }}</p>
+            <h3 id="request_p">Your requests to book {{ space.name }}:</h3>
             <div id="requests_inds_container">
                 {% for request in requests %}
                     {% set nights = (request.end_range - request.start_range).days %}

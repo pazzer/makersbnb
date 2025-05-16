@@ -10,7 +10,7 @@
         {% if bookings|length < 1 %}
             <p>You have no confirmed bookings for {{ space.name }}.</p>
         {% else %}
-            <p id="booking_p">These are the bookings you have confirmed for {{ space.name }}:</p>
+            <h3 id="booking_p">These are the bookings you have confirmed for {{ space.name }}:</h3>
             <div id="bookings_inds_container">
                 {% for booking in bookings %}
                     {% set nights = (booking.end_range - booking.start_range).days %}
