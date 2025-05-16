@@ -14,6 +14,7 @@ from lib.space_repository import SpaceRepository
 from lib.space import Space
 
 from lib.available_range_repo import AvailableRangeRepo
+from lib.available_range import AvailableRange
 
 import mailtrap as mt
 from static.token import token
@@ -283,7 +284,8 @@ def new_space_form():
 @app.route('/myspaces/new', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
+    space_repository = SpaceRepository(connection)
+    available_range_repository = AvailableRangeRepo(connection)
 
     name = request.form['name']
     description = request.form['description']
@@ -300,10 +302,17 @@ def create_space():
     else:
         flash('Image file is required')
         return redirect('/myspaces/new')
+    
+    start_range = request.form['start_range']
+    end_range = request.form['end_range']
+    
     user_id = session.get('user_id', None)
 
     space = Space(None, name, description, price_per_night, img_filename, user_id)
-    repository.add_space(space)
+    space_id = space_repository.add_space(space)
+
+    available_range = AvailableRange(None, start_range, end_range, space_id)
+    available_range_repository.add(available_range)
 
     flash('Your space has been added to MakersBnB!')
     return redirect(f'/myspaces/new')

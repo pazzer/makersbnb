@@ -3,6 +3,9 @@
 -- This is so that our tests, and application, are always operating from a fresh
 -- database state, and that tests dont interfere with each other.
 
+------------------------ availabileranges ------------------------
+DROP TABLE IF EXISTS availabileranges CASCADE;
+
 ------------------------ users ------------------------
 
 -- Delete (drop) all our tables

@@ -30,10 +30,12 @@ class SpaceRepository:
 
 
     def add_space(self, space):
-        self._connection.execute(
-            'INSERT INTO spaces (name, description, price_per_night, img_filename, user_id) VALUES (%s, %s, %s, %s, %s)',
+        rows = self._connection.execute(
+            'INSERT INTO spaces (name, description, price_per_night, img_filename, user_id) VALUES (%s, %s, %s, %s, %s) RETURNING space_id',
             [space.name, space.description, space.price_per_night, space.img_filename, space.user_id])
-        return None
+        row = rows[0]
+        space.space_id = row['space_id']
+        return space.space_id
 
     def find(self, space_id):
         rows = self._connection.execute(
