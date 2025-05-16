@@ -56,11 +56,6 @@ def empty_route():
 # ------------------------------- Registration and login  ---------------------------------------------------
 
 
-# @app.route('/register', methods=['GET'])
-# def handle_registration_request():
-#
-
-
 @app.route('/register', methods=['POST', 'GET'])
 def handle_registration_request():
 
@@ -80,7 +75,7 @@ def handle_registration_request():
             errors=first_error,
             values_so_far=registration_values)
     else:
-        # return render_template("registration_complete.html")
+
         if registration_values.has_errors():
             first_error = registration_values.first_error()
             return render_template(
@@ -96,35 +91,19 @@ def handle_registration_request():
                     errors= str(err),
                     values_so_far=registration_values)
             else:
+                mail = mt.Mail(
+                    sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
+                    to=[mt.Address(email="eveiaim98@outlook.com")],
+                    subject="Thank you for registering!",
+                    text=f"{registration_values.email} has just been registered to makersbnb",
+                    category="Integration Test",
+                )
+
+                client = mt.MailtrapClient(token = token())
+                response = client.send(mail)
+
                 return redirect('/registration_complete')
-                # return render_template("registration_complete.html")
 
-
-
-    # try:
-    #     user_repository.create_user(registration_values.email, registration_values.password_1)
-    # except MakersBnbException as err:
-    #     return render_template(
-    #         "register.html",
-    #         errors= str(err),
-    #         values_so_far=registration_values)
-    # else:
-    #
-    #     #email stuff
-    #     user_email = registration_values.email
-    #
-    #     #
-    #
-    #     mail = mt.Mail(
-    #     sender=mt.Address(email="hello@demomailtrap.co", name="Mailtrap Test"),
-    #     to=[mt.Address(email="eveiaim98@outlook.com")],
-    #     subject="Thank you for registering!",
-    #     text=f"{user_email} has just been registered to makersbnb",
-    #     category="Integration Test",
-    #     )
-    #
-    #     client = mt.MailtrapClient(token = token())
-    #     response = client.send(mail)
 
 @app.route('/registration_complete')
 def registration_succeeded():
