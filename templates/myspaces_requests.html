@@ -6,13 +6,13 @@
 
 {% block content %}
 <a href="/myspaces/manage">&larr;</a>
-<div id="requests_container">
+<div class="requests_container">
     <h2>Requests to book your space</h1>
         {% if requests|length < 1%}
             <p>You have no requests to book *this space*</p>
         {% else %}
             <p id="request_p">Your requests to book {{space.name}}</p>
-            <div id="requests_inds_container">
+            <div class="requests_inds_container">
                 {% for request in requests %}
                     {% set nights = (request.end_range - request.start_range).days %}
                     {% set price_per_night = space.price_per_night %}

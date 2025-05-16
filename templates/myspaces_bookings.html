@@ -4,13 +4,13 @@
 
 {% block content %}
 <a href="/myspaces/manage">&larr;</a>
-<div id="bookings_container"></div>
+<div class="requests_container"></div>
     <h2>Your confirmed bookings</h2>
         {% if bookings|length < 1%}
             <p>You have no confirmed bookings for {{space.name}}.</p>
         {% else %}
             <p id="booking_p">These are the bookings you have confirmed for {{space.name}}:</p>
-            <div id="bookings_inds_container">
+            <div class="requests_inds_container">
                 {% for booking in bookings %}
                     {% set nights = (booking.end_range - booking.start_range).days %}
                     {% set price_per_night = space.price_per_night %}
@@ -18,8 +18,8 @@
                     {% set service_charge = total_price * 0.03 %}
                     {% set final_price = total_price * 0.97 %}
 
-                    <div class="booking">
-                        <div class="booking_info">
+                    <div class="request">
+                        <div class="request_info">
                             <p><b>Guest's name:</b> {{guest_name}}</p>
                             <p><b>Check in:</b> {{booking.start_range}}</p>
                             <p><b>Check out:</b> {{booking.end_range}}</p>
@@ -35,6 +35,5 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <a href="/myspaces/manage">Go back</a>
-    </div>
+</div>
 {% endblock %}
