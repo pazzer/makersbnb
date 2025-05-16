@@ -5,8 +5,8 @@
 {% block title %}Requests to book your space | MakersBnB{% endblock %}
 
 {% block content %}
+<a href="/myspaces/manage">&larr;</a>
 <div id="requests_container">
-    <a href="/myspaces/manage">&larr;</a>
     <h2>Requests to book your space</h1>
         {% if requests|length < 1%}
             <p>You have no requests to book *this space*</p>
