@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>👍 Thank you for your request to book {{space.name}}</p>
+<p>📅 {{formatted_dates}}</p>
+
+<p>📧 We have sent an email to {{host.name}}, who will review your request and let you know if it has been successful.</p>
+{% endblock %}

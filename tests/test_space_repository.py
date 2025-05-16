@@ -27,7 +27,7 @@ def test_get_all_spaces(db_connection):
         Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
         Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
         Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5),
-        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 6)
+        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 7)
     ]
 
 """
@@ -51,7 +51,7 @@ def test_add_space(db_connection):
         Space(3, 'Beach Bungalow', 'Sunny spot by the sea.', 200, 3),
         Space(4, 'Mountain Retreat', 'Quiet escape in the hills.', 180, 4),
         Space(5, 'Modern Studio', 'Compact yet luxurious.', 120, 5),
-        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 6),
+        Space(6, 'Cool Castle', 'Spacious but drafty.', 99, 7),
         Space(7, 'Cardboard Box', 'Back to basics, no ensuite.', 10000, 1)
     ]
 
@@ -63,30 +63,31 @@ def test_add_space(db_connection):
 cozy cabin ('2025-06-01', '2025-06-10', 1),
 '''
 
-def test_date_range_accepted_by_cozy_cabin(db_connection):
+def test_date_range_accepted_by_only__cool_castle__modern_studio__crazy_cabin(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
 
-    holiday_start = to_date("2025-06-01")
-    holiday_end = to_date("2025-06-10")
+    holiday_start = to_date("2025-04-15")
+    holiday_end = to_date("2025-04-20")
 
     result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
+    assert space_name_in_list(result, 'Modern Studio')
     assert space_name_in_list(result, 'Cozy Cabin')
+    assert space_name_in_list(result, 'Cool Castle')
+    assert len(result) == 3
+
+
+
+def test_date_range_accepted_by_one(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = SpaceRepository(db_connection)
+
+    holiday_start = to_date("2026-05-15")
+    holiday_end = to_date("2026-05-18")
+
+    result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
+    assert space_name_in_list(result, 'Cool Castle')
     assert len(result) == 1
-
-
-
-def test_date_range_accepted_by_two(db_connection):
-    db_connection.seed("seeds/makersbnb.sql")
-    repository = SpaceRepository(db_connection)
-
-    holiday_start = to_date("2025-06-05")
-    holiday_end = to_date("2025-06-10")
-
-    result = repository.list_spaces_by_date_range(holiday_start,holiday_end)
-    assert space_name_in_list(result, 'Cozy Cabin')
-    assert space_name_in_list(result, 'Urban Loft')
-    assert len(result) == 2
 
 
 def test_date_range_has_no_matching_spaces(db_connection):
