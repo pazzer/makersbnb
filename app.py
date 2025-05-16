@@ -21,11 +21,18 @@ from lib.space_repository import SpaceRepository
 from lib.space import Space
 from lib.util import to_date, format_date_range, date_to_str
 
+
+from lib.available_range_repo import AvailableRangeRepo
+from lib.available_range import AvailableRange
+
 import flask_login
+
 
 
 import mailtrap as mt
 from static.token import token
+
+from werkzeug.utils import secure_filename
 
 # Create a new Flask app
 login_manager = flask_login.LoginManager()
@@ -112,6 +119,7 @@ def registration_succeeded():
 
 # Login
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -120,6 +128,7 @@ def login():
         return render_template('login.html',
                                values_so_far=LoginValues.all_empty())
     else:
+
 
         login_values = LoginValues.from_post_request(request)
 
@@ -177,7 +186,17 @@ def get_bookings(space_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
     bookings = repository.view_bookings(space_id)
-    return render_template('myspaces_bookings.html', bookings=bookings)
+
+    space_repository = SpaceRepository(connection)
+    space = space_repository.find(space_id)
+    
+    user_repository = UserRepository(connection)
+    for booking in bookings:
+        user_id = booking.user_id
+        guest = user_repository.find_by_id(user_id)
+        guest_name = guest.name
+
+    return render_template('myspaces_bookings.html', bookings=bookings, guest_name=guest_name, space=space)
 
 # GET /myspaces/requests/<space_id>
 # Returns requests to book for a space
@@ -286,15 +305,37 @@ def new_space_form():
 @flask_login.login_required
 def create_space():
     connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
+    space_repository = SpaceRepository(connection)
+    available_range_repository = AvailableRangeRepo(connection)
 
     name = request.form['name']
     description = request.form['description']
     price_per_night = request.form['price_per_night']
+
+    img_file = request.files['img_filename']
+    if img_file and img_file.filename != '':
+        filename = secure_filename(img_file.filename)
+        folder_path = os.path.join('static', 'images')
+        os.makedirs(folder_path, exist_ok=True)
+        save_path = os.path.join(folder_path, filename)
+        img_file.save(save_path)
+
+        img_filename = f'images/{filename}'
+    else:
+        flash('Image file is required')
+        return redirect('/myspaces/new')
+    
+    start_range = request.form['start_range']
+    end_range = request.form['end_range']
+    
     user_id = flask_login.current_user.user_id
 
-    space = Space(None, name, description, price_per_night, user_id)
-    repository.add_space(space)
+
+    space = Space(None, name, description, price_per_night, img_filename, user_id)
+    space_id = space_repository.add_space(space)
+
+    available_range = AvailableRange(None, start_range, end_range, space_id)
+    available_range_repository.add(available_range)
 
     flash('Your space has been added to MakersBnB!')
     return redirect(f'/myspaces/new')

@@ -7,8 +7,20 @@
     margin-right: 0;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.page_wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 main {
     padding: 5px;
+    flex: 1;
 }
 
 /* ------------------- Header styling --------------------*/
@@ -25,10 +37,26 @@ header {
     margin: 0;
     border-bottom: solid 1px hsla(0, 5%, 95%, 1);
 }
-h1 {
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: hsla(0, 5%, 98%, 1);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border-bottom: solid 1px hsla(0, 5%, 95%, 1);
+}
+
+h1, h1 a {
     color: hsla(358, 100%, 67%, 1);
     font-size: 2.5rem;
     padding-left: 10px;
+    text-decoration: none;
 }
 
 #header_links {
@@ -92,6 +120,31 @@ h1 {
     background-color: hsla(358, 100%, 67%, 1);
     border-radius: 20px;
     padding: 10px;
+}
+
+/* ---------------------- registration complete page ----------------------- */
+#reg_complete_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+#reg_complete_container h1 {
+    color: black;
+}
+
+#reg_complete_container p {
+    align-self: center;
+    font-weight: 500;
+    font-size:1.2rem;
+}
+
+#reg_complete_container a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 1.2rem;
 }
 
 
@@ -185,9 +238,14 @@ h2 {
     width: 50px;
 }
 
+#spaces_search_bar input[type="submit"]:hover {
+    outline: solid 3px hsla(358, 100%, 87%, 1);
+    cursor: pointer;
+}
+
 #spaces_div {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
     row-gap: 20px;
     padding: 30px 20px 20px 30px;
@@ -197,6 +255,10 @@ h2 {
     background-color: hsla(0, 5%, 98%, 1);
     padding: 10px;
     border-radius: 20px;
+}
+
+.space p {
+    padding: 10px;
 }
 
 .space h4 {
@@ -210,7 +272,32 @@ h2 {
     color: hsla(358, 100%, 67%, 1);
 }
 
-.space a, button {
+.space img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.space img, .space a {
+    border: none;
+    text-decoration: none;
+    display: block;
+    border-radius: 20px;
+}
+
+.space h4 a {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    font-weight: inherit;
+    display: inline;
+    background-color: inherit;
+}
+
+.space button, .space a {
     text-decoration: none;
     color: white;
     background-color: hsla(358, 100%, 67%, 1);
@@ -221,7 +308,7 @@ h2 {
 
 .space .buttons_div {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .space button {
@@ -231,26 +318,82 @@ h2 {
     border-radius: 20px;
 }
 
+/* --------------------------- individual space page styling ------------------------- */
+
+#individual_space_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 30px;
+    row-gap: 20px;
+    padding: 30px;
+}
+
+.individual_space {
+    background-color: hsla(0, 5%, 98%, 1);
+    border-radius: 20px;
+    padding: 30px 20px 20px 30px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.individual_space h4 {
+    font-size: 1.2rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.individual_space img {
+    width: 100%;
+    height: auto;
+    max-width: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.individual_space a, .individual_space button {
+    text-decoration: none;
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border: none;
+    box-shadow: none;
+    font-size: 0.7rem;
+    padding: 10px;
+    margin: 0;
+    border-radius: 20px;
+}
+
 
 /* --------------------------- manage spaces page styling ------------------------- */
 #manage_spaces_container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
     row-gap: 20px;
+    padding: 0 20px 20px 30px;
+    justify-content: center;
 }
 
 .manage_space {
     background-color: hsla(0, 5%, 98%, 1);
     padding: 10px;
     border-radius: 20px;
-    padding: 30px 20px 20px 30px;
 }
 
 .manage_space h4 {
     font-size: 1.2rem;
-    padding-bottom: 0;
+    padding-bottom: 50px;
     margin-bottom: 0;
+}
+
+.manage_space img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .manage_space a, button {
@@ -262,18 +405,424 @@ h2 {
     font-size: 0.7rem;
 }
 
-.manage_space .manage_buttons_div {
+.manage_buttons_div {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 20px;
+}
+
+.manage_buttons_div button {
+    margin: 10px 30px;
 }
 
 .manage_space button {
     background-color: hsla(358, 100%, 67%, 1);
     padding: 10px;
-    margin: 0;
     border-radius: 20px;
 }
 
+.manage_space_new_button {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.manage_space_new_button button {
+    align-self: center;
+    max-width: fit-content;
+}
+
+.manage_space_new_button a {
+    color: white;
+    text-decoration: none;
+}
+
+#manage_space_new_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 300%;
+}
+
+.manage_space_new {
+    background-color: hsla(0, 5%, 98%, 1);
+    padding: 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.manage_space_new h2 {
+    text-align:center;
+    margin: 0;
+    padding: 60px 0 10px 0;
+}
+
+.manage_space_new a, button {
+    text-decoration: none;
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border: none;
+    box-shadow: none;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px;
+}
+
+
+
+
+
+
+
+
+.new_space {
+    margin: 30px;
+    padding: 20px;
+}
+
+.new_space h3 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.new_space a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    padding-left: 10px;
+    font-size: 1.2rem;
+}
+
+/* -------------------------- new myspace styling ---------------------------- */
+.back_link {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2.2rem;
+    padding: 30px;
+}
+
+
+.new_space_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new_space_container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.new_space_container label {
+    padding-right: 10px;
+    font-size: 1.1rem;
+}
+
+.new_space_container input {
+    color: black;
+    background-color: hsla(0, 5%, 97%, 1);
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.new_space_container input:focus {
+    outline: solid 2px hsla(358, 100%, 67%, 1)
+}
+
+.new_space_container input[type="submit"] {
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+
+
+/* -------------------------- myspaces/bookings styling ---------------------- */
+#bookings_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 20px 30px;
+}
+
+#bookings_container h2 {
+    color: black;
+    font-size: 2rem;
+    padding: 0 40px;
+}
+
+#bookings_container p {
+    padding: 0 60px;
+}
+
+#bookings_container h3 {
+    color: black;
+    font-size: 1.5rem;
+    padding: 0 250px;
+}
+
+#bookings_container a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+#booking_p {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#bookings_inds_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 40px;
+    row-gap: 40px;
+    justify-content: center;
+}
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    background-color: hsla(0, 5%, 95%, 1);
+    border-radius: 20px;
+    max-width: 400px;
+    padding: 10px 5px;
+}
+
+.booking_info {
+    align-self: center;
+}
+
+.booking hr {
+    width: 85%;
+    align-self: center;
+}
+
+.payment_div {
+    text-align: right;
+}
+
+.payment_equation {
+    font-size: 0.7rem;
+}
+
+.total_price {
+    color: hsla(358, 100%, 67%, 1);
+}
+
+
+/* ------------------------- myspaces/requests styling --------------------------- */
+
+#requests_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 20px;
+}
+
+#requests_container h2 {
+    color: black;
+    font-size: 2rem;
+    padding: 0 40px;
+}
+
+#requests_container h3 {
+    color: black;
+    font-size: 1.5rem;
+    padding: 0 200px;
+}
+
+#requests_container p {
+    padding: 0 80px;
+}
+
+#requests_container a {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+#requests_p {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#requests_inds_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 40px;
+    row-gap: 40px;
+    justify-content: center;
+}
+
+.request {
+    display: flex;
+    flex-direction: column;
+    background-color: hsla(0, 5%, 95%, 1);
+    border-radius: 20px;
+    max-width: 400px;
+    padding: 10px 5px;
+}
+
+.request_info {
+    align-self: center;
+}
+
+.request hr {
+    width: 85%;
+    align-self: center;
+}
+
+.payment_div {
+    text-align: right;
+}
+
+.payment_equation {
+    font-size: 0.6rem;
+}
+
+.total_price {
+    color: hsla(358, 100%, 67%, 1);
+}
+
+.request_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.request button {
+    padding: 10px;
+    margin: 10px 25px;
+    border-radius: 20px;
+    width: 70px;
+}
+
+.request button:hover {
+    outline: solid 2px hsla(358, 100%, 87%, 1);
+    cursor: pointer;
+}
+
+
+/* -------------------------- new myspace styling ---------------------------- */
+.back_link {
+    color: hsla(358, 100%, 67%, 1);
+    text-decoration: none;
+    font-size: 2.2rem;
+    padding: 30px;
+}
+
+
+.new_space_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new_space_container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.new_space_container label {
+    padding-right: 10px;
+    font-size: 1.1rem;
+}
+
+.new_space_container input {
+    color: black;
+    background-color: hsla(0, 5%, 97%, 1);
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.new_space_container input:focus {
+    outline: solid 2px hsla(358, 100%, 67%, 1)
+}
+
+.new_space_container input[type="submit"] {
+    color: white;
+    background-color: hsla(358, 100%, 67%, 1);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+
+/* ------------------------ Styling for new space page ----------------------*/
+
+#new_space_form_container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+#new_space_form {
+    background-color: hsla(0, 5%, 98%, 1);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 12px hsla(0, 5%, 85%, 0.4);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#new_space_form label {
+    font-weight: bold;
+}
+
+#new_space_form input[type="text"],
+#new_space_form input[type="number"],
+#new_space_form input[type="file"],
+#new_space_form textarea {
+    padding: 10px;
+    border: 1px solid hsla(0, 0%, 80%, 1);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: white;
+    color: black;
+}
+
+#new_space_form textarea {
+    resize: vertical;
+}
+
+#new_space_form input[type="submit"] {
+    background-color: hsla(358, 100%, 67%, 1);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#new_space_form input[type="submit"]:hover {
+    background-color: hsla(358, 100%, 57%, 1);
+}
+
+.centered-link {
+    text-align: center;
+    margin-top: 20px;
+}
 
 /* ------------------------ footer styling ------------------------ */
 footer {

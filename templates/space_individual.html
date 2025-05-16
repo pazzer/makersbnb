@@ -2,13 +2,19 @@
 
 {% block title %}MakersBnB | {{space.name}}{% endblock %}
 
+
 {% block content %}
-    <h4>{{space.name}}</h4>
-<!--    <p style=""><mark style="background-color:light-gray; font-size:14px; font-family:monospace;">👍📅 Available! {{ formatted_dates }}</mark</p>-->
-    <p style="font-size:15px; font-family:monospace">👍📅 Available! {{ formatted_dates }}</mark></p>
-    <p>{{space.description}}</p>
-    <p>£{{space.price_per_night}} per night</p>
-    <p>Hosted by {{owner.name}}</p>
+
+<div id="individual_space_container">
+    <div class="individual_space">
+        <img src="/static/{{ space.img_filename }}" alt="{{ space.name }}" />
+    </div>
+    <div class="individual_space">
+        <h4>{{ space.name }}</h4>
+        <br>
+        <p>{{ space.description }}</p>
+        <p>£{{ space.price_per_night }} per night</p>
+        <p>Hosted by {{ owner.name }}</p>
     <p>Available date ranges:</p>
     <ul>
         <li>First date range</li>
@@ -20,9 +26,10 @@
         <input type="hidden" name="end_date" value={{end_date}}>
         <input type="hidden" name="customer_id" value={{current_user.user_id}}>
         <input type="hidden" name="space_id" value={{space.space_id}}>
-        <button type="submit">Book</button>
+        <button><a href="/spaces/<int:space_id>/book">Book</a></button>
     </form>
-
-    <button><a href='/spaces'>Go back</a></button>
+        <button><a href="/spaces">Go back</a></button>
+    </div>
+</div>
 
 {% endblock %}

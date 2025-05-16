@@ -3,6 +3,9 @@
 -- This is so that our tests, and application, are always operating from a fresh
 -- database state, and that tests dont interfere with each other.
 
+------------------------ availabileranges ------------------------
+DROP TABLE IF EXISTS availabileranges CASCADE;
+
 ------------------------ users ------------------------
 
 -- Delete (drop) all our tables
@@ -87,19 +90,22 @@ CREATE TABLE spaces (
     name VARCHAR(255),
     description VARCHAR(255),
     price_per_night INT,
+    img_filename VARCHAR(255),
     user_id INT,
         CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id)
         ON DELETE CASCADE
 );
 
 -- Add any records that are needed for the tests to run
-INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
-('Cozy Cabin', 'Rustic cabin in the forest.', 100, 1), -- Owned by Alice
-('Urban Loft', 'Sleek apartment in downtown.', 150, 2), -- Owned by Bob
-('Beach Bungalow', 'Sunny spot by the sea.', 200, 3), -- Owned by Carol
-('Mountain Retreat', 'Quiet escape in the hills.', 180, 4), -- Owned by Dave
-('Modern Studio', 'Compact yet luxurious.', 120, 5), -- Owned by Eve
-('Cool Castle', 'Spacious but drafty.', 99, 7); -- Owned by Rory
+
+INSERT INTO spaces (name, description, price_per_night, img_filename, user_id) VALUES
+('Cozy Cabin', 'Rustic cabin in the forest.', 100, 'images/cozy-cabin.jpg', 1),
+('Urban Loft', 'Sleek apartment in downtown.', 150, 'images/urban-loft.jpg', 2),
+('Beach Bungalow', 'Sunny spot by the sea.', 200, 'images/beach-bungalow.jpg', 3),
+('Mountain Retreat', 'Quiet escape in the hills.', 180, 'images/mountain-retreat.jpg', 4),
+('Modern Studio', 'Compact yet luxurious.', 120, 'images/modern-studio.jpg', 5),
+('Cool Castle', 'Spacious but drafty.', 99, 'images/cool-castle.jpg', 6);
+
 
 ------------------------ available_ranges ------------------------
 
