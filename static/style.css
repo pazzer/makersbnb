@@ -623,25 +623,6 @@ h2 {
     cursor: pointer;
 }
 
-
-
-.new_space {
-    margin: 30px;
-    padding: 20px;
-}
-
-.new_space h3 {
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.new_space a {
-    color: hsla(358, 100%, 67%, 1);
-    text-decoration: none;
-    padding-left: 10px;
-    font-size: 1.2rem;
-}
-
 /* -------------------------- new myspace styling ---------------------------- */
 .back_link {
     color: hsla(358, 100%, 67%, 1);
